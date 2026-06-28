@@ -1,5 +1,6 @@
 import type {
   Answers,
+  Impact,
   Lang,
   Pkg,
   PathKind,
@@ -7,6 +8,7 @@ import type {
   Risk,
   Severity,
   Stage,
+  SubScore,
 } from "./types";
 import { STR, summarize } from "./i18n";
 
@@ -115,6 +117,10 @@ export function generateReport(a: Answers, lang: Lang): Report {
   const recommendedPackage: Pkg["id"] =
     path === "optimize" ? (a.pains.length > 0 ? "custom" : "support") : "implementation";
 
+  const subScores = computeSubScores(a, path, lang);
+  const impact = computeImpact(a);
+  const benchmark = buildBenchmark(a, lang);
+
   return {
     score,
     zone,
@@ -124,11 +130,144 @@ export function generateReport(a: Answers, lang: Lang): Report {
     profileLine,
     pathKind: path,
     recommendation,
+    subScores,
+    impact,
+    benchmark,
     risks: unique,
     plan,
     packages,
     recommendedPackage,
   };
+}
+
+/* ============================================================
+   Quantified impact + area sub-scores (the "wow" of the audit)
+   ============================================================ */
+
+function roundTo(n: number, step: number): number {
+  return Math.round(n / step) * step;
+}
+
+function clampScore(n: number): number {
+  return Math.max(10, Math.min(98, Math.round(n)));
+}
+
+// Representative team hours/week spent on manual work.
+function repWeeklyHours(a: Answers): number {
+  const byAnswer: Record<string, number> = {
+    lt5: 3,
+    "5-15": 10,
+    "15-40": 25,
+    "40+": 50,
+  };
+  const bySize: Record<string, number> = {
+    "1-5": 6,
+    "6-20": 14,
+    "21-50": 28,
+    "51-200": 45,
+    "200+": 70,
+  };
+  let h =
+    a.manualHours && byAnswer[a.manualHours] != null
+      ? byAnswer[a.manualHours]
+      : (a.size && bySize[a.size]) || 12;
+  if (a.doubleEntry === "yes") h = Math.round(h * 1.2);
+  return h;
+}
+
+// Stated, market-aware fully-loaded labour assumption (USD/hr).
+function hourlyRate(market: Answers["market"]): number {
+  switch (market) {
+    case "us":
+      return 35;
+    case "eu":
+      return 32;
+    case "ua":
+      return 15;
+    default:
+      return 28;
+  }
+}
+
+function computeImpact(a: Answers): Impact {
+  const weeklyHours = repWeeklyHours(a);
+  const monthlyHours = Math.round(weeklyHours * 4.33);
+  const rate = hourlyRate(a.market);
+  const monthlyCost = roundTo(monthlyHours * rate, 10);
+  const savingsPct = a.doubleEntry === "yes" ? 0.65 : 0.6;
+  const savedHoursMonth = Math.round(monthlyHours * savingsPct);
+  const savedCostMonth = roundTo(monthlyCost * savingsPct, 10);
+  const savedCostYear = roundTo(savedCostMonth * 12, 100);
+  return {
+    weeklyHours,
+    monthlyHours,
+    hourlyRate: rate,
+    monthlyCost,
+    savingsPct,
+    savedHoursMonth,
+    savedCostMonth,
+    savedCostYear,
+  };
+}
+
+function computeSubScores(a: Answers, path: PathKind, lang: Lang): SubScore[] {
+  const L = STR[lang].report.subScoreLabels;
+  const noIntegrations =
+    a.integrations.length === 0 || has(a.integrations, "none");
+  const hasP = (id: string) => has(a.pains, id);
+
+  // Data & integrations
+  let data = 100;
+  if (a.system === "spreadsheets") data -= 22;
+  if (noIntegrations && a.system !== "spreadsheets") data -= 25;
+  if (hasP("disconnected")) data -= 20;
+  if (hasP("reporting")) data -= 14;
+  if (a.doubleEntry === "yes") data -= 20;
+
+  // Automation
+  let automation = 100;
+  if (hasP("manual")) automation -= 20;
+  const mh: Record<string, number> = { lt5: 4, "5-15": 12, "15-40": 26, "40+": 38 };
+  if (a.manualHours) automation -= mh[a.manualHours] ?? 0;
+  else if (a.size === "51-200" || a.size === "200+") automation -= 16;
+  if (a.system === "spreadsheets") automation -= 16;
+  if (a.doubleEntry === "yes") automation -= 10;
+  if (a.closeDays === "6-10") automation -= 8;
+  if (a.closeDays === "10+") automation -= 14;
+
+  // Compliance & risk
+  let compliance = 100;
+  if (path === "migrate-urgent") compliance -= 40;
+  else if (path === "migrate") compliance -= 20;
+  if (hasP("compliance")) compliance -= a.market === "ua" ? 24 : 18;
+  if (hasP("errors")) compliance -= 18;
+  if (hasP("support")) compliance -= 12;
+
+  // Cost-efficiency
+  let cost = 100;
+  if (hasP("cost")) cost -= 22;
+  if (a.system === "sap") cost -= 20;
+  if (a.system === "quickbooks") cost -= 8;
+  if (hasP("scaling")) cost -= 14;
+  if (noIntegrations) cost -= 8;
+  if (a.system === "spreadsheets") cost -= 10;
+
+  return [
+    { id: "data", label: L.data, value: clampScore(data) },
+    { id: "automation", label: L.automation, value: clampScore(automation) },
+    { id: "compliance", label: L.compliance, value: clampScore(compliance) },
+    { id: "cost", label: L.cost, value: clampScore(cost) },
+  ];
+}
+
+function buildBenchmark(a: Answers, lang: Lang): string {
+  const r = STR[lang].report;
+  let txt = r.benchmarkBase;
+  if (a.closeDays === "6-10" || a.closeDays === "10+") {
+    const dayLabel = STR[lang].labels.metric.closeDays[a.closeDays];
+    txt += r.benchmarkClose.replace("{days}", dayLabel);
+  }
+  return txt;
 }
 
 function buildPlan(a: Answers, path: PathKind, lang: Lang): Stage[] {
@@ -190,6 +329,7 @@ function buildPackages(lang: Lang): Pkg[] {
     tagline: p.tagline,
     deliverables: p.deliverables,
     priceFrom: p.priceFrom,
+    priceNote: (p as { priceNote?: string }).priceNote,
     perMonth: p.perMonth,
     timeline: p.timeline,
   }));

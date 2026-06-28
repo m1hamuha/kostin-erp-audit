@@ -26,7 +26,7 @@ const en = {
     odooNote: "Built around Odoo — the open-source ERP.",
     ctaStart: "Start the audit",
     ctaNote: "Your report appears instantly",
-    chips: ["≈ 2 minutes", "5 short steps", "Clear report"],
+    chips: ["≈ 2–3 minutes", "6 quick steps", "Clear report"],
     whatYouGetTitle: "What you'll get",
     getItems: [
       {
@@ -42,15 +42,15 @@ const en = {
         d: "Whether to implement, migrate, or optimize — and the stages to get there.",
       },
       {
-        t: "Packages & estimate",
-        d: "Exactly what you'd get, with a 'from' price and a timeline.",
+        t: "Your impact in numbers",
+        d: "An estimate of the hours — and dollars — manual work is costing you, plus packages and a 'from' price.",
       },
     ],
     previewKicker: "Sample report",
     previewScoreLabel: "Health score",
     previewZone: "Needs work",
     previewRisks: [
-      { label: "1C / BAS banned in Ukraine", tag: "high" },
+      { label: "Too much manual data entry", tag: "high" },
       { label: "Disconnected systems", tag: "med" },
       { label: "No reliable reporting", tag: "low" },
     ],
@@ -79,6 +79,16 @@ const en = {
       integrations: {
         title: "What's connected to your system?",
         subtitle: "Select everything you use.",
+      },
+      metrics: {
+        title: "A few numbers — to put a dollar value on it",
+        subtitle:
+          "Rough estimates are fine. These power the savings estimate in your report.",
+        manualHoursLabel:
+          "Hours per week your team spends on manual data entry & reconciliation",
+        volumeLabel: "Orders or invoices per month",
+        closeDaysLabel: "Days to close the books each month",
+        doubleEntryLabel: "Is the same data entered into more than one system?",
       },
       pains: {
         title: "What hurts the most right now?",
@@ -110,6 +120,34 @@ const en = {
     perMonthWord: "/mo",
     estimateNote:
       "Figures are estimates. We'll confirm scope and a fixed quote after a short, free diagnostic call.",
+    trustLine:
+      "Lean, AI-assisted delivery — senior-level work without agency overhead, so you pay less.",
+    // Area sub-scores
+    subScoresTitle: "Where you stand, area by area",
+    subScoreLabels: {
+      data: "Data & integrations",
+      automation: "Automation",
+      compliance: "Compliance & risk",
+      cost: "Cost-efficiency",
+    },
+    // Quantified impact
+    impactKicker: "Impact in numbers",
+    impactTitle: "What manual work is costing you",
+    impactEstimate: "Estimate",
+    impactHoursLabel: "Lost to manual work",
+    impactHoursUnit: "hours / month",
+    impactCostLabel: "Cost of that time",
+    impactCostUnit: "/ month",
+    impactSaveLabel: "Recoverable with Odoo",
+    impactSaveUnit: "/ year",
+    impactSaveSub: "≈ {hours} hours and {cost} back every month",
+    impactAssumption:
+      "Estimate only — based on ~{rate}/hour fully-loaded labour and Odoo automation removing ~{pct}% of this manual work. We confirm your real numbers on the free call.",
+    benchmarkKicker: "Benchmark",
+    benchmarkBase:
+      "Businesses your size that move to Odoo typically cut manual data entry by 40–60% and bring bank, sales, inventory, and invoicing into one connected system.",
+    benchmarkClose:
+      " They also shorten month-end close from {days} to a couple of days.",
     sev: { high: "High priority", med: "Medium priority", low: "Low priority" },
     zone: { green: "Healthy", amber: "Needs work", red: "At risk" },
     verdict: {
@@ -192,6 +230,22 @@ const en = {
       compliance: "Tax / compliance / e-invoicing headaches",
       support: "Weak support / depends on one person",
       cost: "Licensing / upkeep too expensive",
+    },
+    metric: {
+      manualHours: { lt5: "< 5", "5-15": "5–15", "15-40": "15–40", "40+": "40+" },
+      volume: {
+        lt100: "< 100",
+        "100-500": "100–500",
+        "500-2000": "500–2,000",
+        "2000+": "2,000+",
+      },
+      closeDays: {
+        "1-2": "1–2 days",
+        "3-5": "3–5 days",
+        "6-10": "6–10 days",
+        "10+": "10+ days",
+      },
+      yesno: { no: "No", yes: "Yes" },
     },
   },
 
@@ -380,7 +434,8 @@ const en = {
         "Data import & migration",
         "Team training & go-live support",
       ],
-      priceFrom: 2500,
+      priceFrom: 1900,
+      priceNote: "typical project $3,000–$9,000 depending on scope",
       perMonth: false,
       timeline: "from 3–6 weeks",
     },
@@ -395,7 +450,8 @@ const en = {
         "Custom reports & dashboards",
         "API & third-party connections",
       ],
-      priceFrom: 1500,
+      priceFrom: 1200,
+      priceNote: "or $45/hr",
       perMonth: false,
       timeline: "from 2–4 weeks",
     },
@@ -410,7 +466,7 @@ const en = {
         "Regular health checks",
         "Ongoing small enhancements",
       ],
-      priceFrom: 300,
+      priceFrom: 250,
       perMonth: true,
       timeline: "monthly, ongoing",
     },
@@ -437,7 +493,7 @@ const uk: typeof en = {
     odooNote: "На базі Odoo — ERP з відкритим кодом.",
     ctaStart: "Почати аудит",
     ctaNote: "Звіт зʼявиться одразу на екрані",
-    chips: ["≈ 2 хвилини", "5 коротких кроків", "Зрозумілий звіт"],
+    chips: ["≈ 2–3 хвилини", "6 коротких кроків", "Зрозумілий звіт"],
     whatYouGetTitle: "Що ви отримаєте",
     getItems: [
       {
@@ -453,15 +509,15 @@ const uk: typeof en = {
         d: "Впроваджувати, мігрувати чи оптимізувати — і які етапи пройти.",
       },
       {
-        t: "Пакети та оцінку",
-        d: "Що саме ви отримаєте, з ціною «від» і строками.",
+        t: "Вашу вигоду в цифрах",
+        d: "Скільки годин — і грошей — коштує ручна робота, плюс пакети й ціна «від».",
       },
     ],
     previewKicker: "Приклад звіту",
     previewScoreLabel: "Оцінка стану",
     previewZone: "Є що покращити",
     previewRisks: [
-      { label: "1С / BAS заборонені в Україні", tag: "high" },
+      { label: "Забагато ручного введення даних", tag: "high" },
       { label: "Системи не зв'язані", tag: "med" },
       { label: "Немає надійних звітів", tag: "low" },
     ],
@@ -491,6 +547,16 @@ const uk: typeof en = {
         title: "Що підключено до вашої системи?",
         subtitle: "Відмітьте все, що використовуєте.",
       },
+      metrics: {
+        title: "Кілька цифр — щоб порахувати вигоду в грошах",
+        subtitle:
+          "Приблизних оцінок достатньо. Вони живлять розрахунок економії у вашому звіті.",
+        manualHoursLabel:
+          "Скільки годин на тиждень команда витрачає на ручне введення та звірку даних",
+        volumeLabel: "Замовлень або рахунків на місяць",
+        closeDaysLabel: "Скільки днів займає закриття місяця",
+        doubleEntryLabel: "Чи вводяться одні й ті самі дані у кілька систем?",
+      },
       pains: {
         title: "Що болить найбільше зараз?",
         subtitle: "Відмітьте те, що підходить — і за бажанням опишіть своїми словами.",
@@ -513,7 +579,8 @@ const uk: typeof en = {
       "За анкетою явних проблем не видно — це добрий знак. Точну картину покаже коротка діагностика вживу.",
     planTitle: "Рекомендований план",
     packagesTitle: "Що ви отримаєте",
-    packagesIntro: "Три формати співпраці — оберіть свій або поєднайте їх.",
+    packagesIntro:
+      "Три формати співпраці — оберіть свій або поєднайте їх. Ціни в USD.",
     recommendedBadge: "Рекомендовано для вас",
     priceLabel: "Орієнтовна ціна",
     timelineLabel: "Строки",
@@ -521,6 +588,32 @@ const uk: typeof en = {
     perMonthWord: "/міс",
     estimateNote:
       "Цифри орієнтовні. Точний обсяг і фіксовану вартість узгодимо після короткого безкоштовного дзвінка.",
+    trustLine:
+      "Ощадливе впровадження з ШІ — робота senior-рівня без націнок агенцій, тож ви платите менше.",
+    subScoresTitle: "Де ви зараз — за напрямами",
+    subScoreLabels: {
+      data: "Дані та інтеграції",
+      automation: "Автоматизація",
+      compliance: "Відповідність і ризики",
+      cost: "Економність",
+    },
+    impactKicker: "Вигода в цифрах",
+    impactTitle: "У скільки вам обходиться ручна робота",
+    impactEstimate: "Орієнтовно",
+    impactHoursLabel: "Втрачено на ручну роботу",
+    impactHoursUnit: "годин / місяць",
+    impactCostLabel: "Вартість цього часу",
+    impactCostUnit: "/ місяць",
+    impactSaveLabel: "Можна повернути з Odoo",
+    impactSaveUnit: "/ рік",
+    impactSaveSub: "≈ {hours} годин і {cost} назад щомісяця",
+    impactAssumption:
+      "Лише орієнтовно — з розрахунку ~{rate}/год повної вартості праці та автоматизації Odoo, що прибирає ~{pct}% цієї ручної роботи. Ваші реальні цифри уточнимо на безкоштовному дзвінку.",
+    benchmarkKicker: "Орієнтир",
+    benchmarkBase:
+      "Бізнеси вашого розміру, що переходять на Odoo, зазвичай скорочують ручне введення даних на 40–60% і зводять банк, продажі, склад і рахунки в одну зв'язану систему.",
+    benchmarkClose:
+      " А ще скорочують закриття місяця з {days} до кількох днів.",
     sev: {
       high: "Високий пріоритет",
       med: "Середній пріоритет",
@@ -607,6 +700,22 @@ const uk: typeof en = {
       compliance: "Складнощі з податками / звітністю / ЕДО",
       support: "Слабка підтримка / залежність від однієї людини",
       cost: "Дорогі ліцензії / обслуговування",
+    },
+    metric: {
+      manualHours: { lt5: "< 5", "5-15": "5–15", "15-40": "15–40", "40+": "40+" },
+      volume: {
+        lt100: "< 100",
+        "100-500": "100–500",
+        "500-2000": "500–2 000",
+        "2000+": "2 000+",
+      },
+      closeDays: {
+        "1-2": "1–2 дні",
+        "3-5": "3–5 днів",
+        "6-10": "6–10 днів",
+        "10+": "10+ днів",
+      },
+      yesno: { no: "Ні", yes: "Так" },
     },
   },
 
@@ -795,7 +904,8 @@ const uk: typeof en = {
         "Імпорт і міграція даних",
         "Навчання команди й підтримка на старті",
       ],
-      priceFrom: 2500,
+      priceFrom: 1900,
+      priceNote: "типовий проєкт $3 000–$9 000 залежно від обсягу",
       perMonth: false,
       timeline: "від 3–6 тижнів",
     },
@@ -810,7 +920,8 @@ const uk: typeof en = {
         "Власні звіти й дашборди",
         "API та сторонні підключення",
       ],
-      priceFrom: 1500,
+      priceFrom: 1200,
+      priceNote: "або $45/год",
       perMonth: false,
       timeline: "від 2–4 тижнів",
     },
@@ -825,7 +936,7 @@ const uk: typeof en = {
         "Регулярні перевірки стану",
         "Постійні невеликі покращення",
       ],
-      priceFrom: 300,
+      priceFrom: 250,
       perMonth: true,
       timeline: "щомісяця, постійно",
     },

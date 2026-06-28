@@ -84,6 +84,9 @@ export function Questionnaire({ initial, onSubmit, onExit }: Props) {
           {step.kind === "multi" && (
             <MultiField step={step} answers={a} set={setA} />
           )}
+          {step.kind === "metrics" && (
+            <MetricsField step={step} answers={a} set={setA} />
+          )}
           {step.kind === "pains" && (
             <PainsField step={step} answers={a} set={setA} />
           )}
@@ -100,7 +103,7 @@ export function Questionnaire({ initial, onSubmit, onExit }: Props) {
           <ArrowIcon className="h-5 w-5" />
         </Button>
       </div>
-      {step.kind !== "single" && (
+      {(step.kind === "multi" || step.kind === "pains") && (
         <p className="mt-3 text-center text-[0.92rem] text-ink-2">
           {s.quiz.multiHint}
         </p>
@@ -112,7 +115,7 @@ export function Questionnaire({ initial, onSubmit, onExit }: Props) {
 function stepComplete(step: Step, a: Answers): boolean {
   if (step.kind === "single") return !!a[step.key];
   if (step.kind === "multi") return (a[step.key] as string[]).length > 0;
-  return true; // pains optional
+  return true; // metrics & pains optional
 }
 
 /* ---------------- Single choice ---------------- */
@@ -203,6 +206,54 @@ function MultiField({
           onClick={() => toggle(opt.id)}
         />
       ))}
+    </div>
+  );
+}
+
+/* ---------------- Metrics (compact numeric pickers) ---------------- */
+function MetricsField({
+  step,
+  answers,
+  set,
+}: {
+  step: Extract<Step, { kind: "metrics" }>;
+  answers: Answers;
+  set: (a: Answers) => void;
+}) {
+  return (
+    <div className="grid gap-6">
+      {step.groups.map((g) => {
+        const current = answers[g.key] as string;
+        return (
+          <div key={g.key as string}>
+            <p className="mb-2.5 font-display text-[1.05rem] font-bold leading-snug text-ink">
+              {g.label}
+            </p>
+            <div className="flex flex-wrap gap-2.5">
+              {g.options.map((opt) => {
+                const active = current === opt.id;
+                return (
+                  <button
+                    key={opt.id}
+                    onClick={() =>
+                      set({ ...answers, [g.key]: active ? "" : opt.id })
+                    }
+                    aria-pressed={active}
+                    className={cx(
+                      "rounded-xl border-2 px-4 py-2.5 font-display text-[1.02rem] font-bold transition-colors duration-150",
+                      active
+                        ? "border-accent bg-accent text-white"
+                        : "border-line bg-surface text-ink hover:border-ink/25",
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

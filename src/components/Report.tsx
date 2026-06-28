@@ -1,4 +1,4 @@
-import type { Report, Risk, Pkg } from "../types";
+import type { Report, Risk, Pkg, SubScore, Impact } from "../types";
 import { useLang, useStr, formatUsd } from "../i18n";
 import { HealthScore } from "./HealthScore";
 import { ContactForm } from "./ContactForm";
@@ -58,6 +58,24 @@ export function ReportView({
           </div>
         </div>
       </div>
+
+      {/* Area sub-scores */}
+      <SubScores subScores={report.subScores} />
+
+      {/* Quantified impact — the "wow" */}
+      <ImpactBlock impact={report.impact} />
+
+      {/* Benchmark */}
+      <section className="mt-6">
+        <div className="print-block rounded-xl2 border border-line border-l-4 border-l-accent bg-accent-soft p-5 shadow-card md:p-6">
+          <p className="font-display text-[0.8rem] font-bold uppercase tracking-wider text-accent">
+            {s.report.benchmarkKicker}
+          </p>
+          <p className="mt-1.5 text-[1.12rem] font-semibold leading-relaxed text-ink">
+            {report.benchmark}
+          </p>
+        </div>
+      </section>
 
       {/* Recommended path */}
       <section className="mt-6">
@@ -145,6 +163,11 @@ export function ReportView({
         <p className="mt-2 text-[1.08rem] leading-relaxed text-ink-2">
           {s.report.packagesIntro}
         </p>
+        <div className="mt-4 rounded-xl2 border border-line border-l-4 border-l-accent bg-accent-soft px-5 py-4">
+          <p className="text-[1.08rem] font-bold leading-relaxed text-ink">
+            {s.report.trustLine}
+          </p>
+        </div>
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           {report.packages.map((p) => (
             <PackageCard
@@ -222,6 +245,11 @@ function PackageCard({ pkg, recommended }: { pkg: Pkg; recommended: boolean }) {
           </span>
         )}
       </div>
+      {pkg.priceNote && (
+        <p className="mt-1.5 text-[0.98rem] font-semibold text-accent-ink">
+          {pkg.priceNote}
+        </p>
+      )}
       <p className="mt-1 text-[0.95rem] font-semibold text-ink-2">
         {s.report.timelineLabel}: {pkg.timeline}
       </p>
@@ -239,6 +267,137 @@ function PackageCard({ pkg, recommended }: { pkg: Pkg; recommended: boolean }) {
           </li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+function subColor(v: number): string {
+  return v >= 75 ? "var(--ok)" : v >= 50 ? "var(--risk-med)" : "var(--risk-high)";
+}
+
+function SubScores({ subScores }: { subScores: SubScore[] }) {
+  const s = useStr();
+  return (
+    <section className="mt-6">
+      <div className="print-block rounded-xl2 border border-line bg-surface p-6 shadow-card md:p-8">
+        <h2 className="font-display text-[1.3rem] font-extrabold tracking-tight text-ink">
+          {s.report.subScoresTitle}
+        </h2>
+        <div className="mt-5 grid gap-x-8 gap-y-5 sm:grid-cols-2">
+          {subScores.map((sc) => (
+            <div key={sc.id}>
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="font-display text-[1.08rem] font-bold text-ink">
+                  {sc.label}
+                </span>
+                <span
+                  className="tnum font-display text-[1.15rem] font-extrabold"
+                  style={{ color: subColor(sc.value) }}
+                >
+                  {sc.value}
+                </span>
+              </div>
+              <div className="mt-2 h-2.5 overflow-hidden rounded-full bg-line">
+                <div
+                  className="h-full rounded-full transition-[width] duration-700 ease-out"
+                  style={{ width: `${sc.value}%`, background: subColor(sc.value) }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ImpactBlock({ impact }: { impact: Impact }) {
+  const r = useStr().report;
+  const sub = r.impactSaveSub
+    .replace("{hours}", String(impact.savedHoursMonth))
+    .replace("{cost}", formatUsd(impact.savedCostMonth));
+  const assumption = r.impactAssumption
+    .replace("{rate}", formatUsd(impact.hourlyRate))
+    .replace("{pct}", String(Math.round(impact.savingsPct * 100)));
+  return (
+    <section className="mt-6">
+      <div className="print-block overflow-hidden rounded-xl2 bg-ink text-white shadow-lift">
+        <div className="px-6 py-7 md:px-9 md:py-8">
+          <div className="flex flex-wrap items-center gap-3">
+            <p className="font-display text-[0.85rem] font-bold uppercase tracking-wider text-white/70">
+              {r.impactKicker}
+            </p>
+            <span className="rounded-full bg-white/15 px-2.5 py-0.5 font-display text-[0.78rem] font-bold uppercase tracking-wide text-white">
+              {r.impactEstimate}
+            </span>
+          </div>
+          <h2 className="mt-2 font-display text-[1.6rem] font-extrabold leading-tight tracking-tight text-white md:text-[2.05rem]">
+            {r.impactTitle}
+          </h2>
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+            <Stat
+              value={String(impact.monthlyHours)}
+              unit={r.impactHoursUnit}
+              label={r.impactHoursLabel}
+            />
+            <Stat
+              value={formatUsd(impact.monthlyCost)}
+              unit={r.impactCostUnit}
+              label={r.impactCostLabel}
+            />
+            <Stat
+              value={formatUsd(impact.savedCostYear)}
+              unit={r.impactSaveUnit}
+              label={r.impactSaveLabel}
+              sub={sub}
+              highlight
+            />
+          </div>
+          <p className="mt-5 text-[0.98rem] leading-relaxed text-white/75">
+            {assumption}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Stat({
+  value,
+  unit,
+  label,
+  sub,
+  highlight,
+}: {
+  value: string;
+  unit: string;
+  label: string;
+  sub?: string;
+  highlight?: boolean;
+}) {
+  return (
+    <div
+      className={cx(
+        "rounded-xl2 p-5",
+        highlight ? "bg-accent" : "bg-white/10",
+      )}
+    >
+      <div className="flex flex-wrap items-baseline gap-x-1.5">
+        <span className="tnum font-display text-[2.4rem] font-extrabold leading-none text-white md:text-[2.9rem]">
+          {value}
+        </span>
+        <span className="font-display text-[0.98rem] font-bold text-white/80">
+          {unit}
+        </span>
+      </div>
+      <p className="mt-2.5 text-[1.05rem] font-bold leading-snug text-white">
+        {label}
+      </p>
+      {sub && (
+        <p className="mt-1 text-[0.92rem] font-medium leading-snug text-white/85">
+          {sub}
+        </p>
+      )}
     </div>
   );
 }

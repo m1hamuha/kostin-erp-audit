@@ -33,7 +33,22 @@ export interface PainStep {
   textPlaceholder: string;
 }
 
-export type Step = SingleStep | MultiStep | PainStep;
+// One screen bundling several short numeric pickers (one row each),
+// so the questionnaire stays ~2–3 min while capturing impact signals.
+export interface MetricGroup {
+  key: keyof Answers;
+  label: string;
+  options: Option[];
+}
+
+export interface MetricsStep {
+  kind: "metrics";
+  title: string;
+  subtitle?: string;
+  groups: MetricGroup[];
+}
+
+export type Step = SingleStep | MultiStep | PainStep | MetricsStep;
 
 const SYSTEM_ORDER = [
   "odoo",
@@ -63,6 +78,11 @@ const PAIN_ORDER = [
   "support",
   "cost",
 ] as const;
+
+const MANUAL_HOURS_ORDER = ["lt5", "5-15", "15-40", "40+"] as const;
+const VOLUME_ORDER = ["lt100", "100-500", "500-2000", "2000+"] as const;
+const CLOSE_DAYS_ORDER = ["1-2", "3-5", "6-10", "10+"] as const;
+const YESNO_ORDER = ["no", "yes"] as const;
 
 export function getSteps(lang: Lang): Step[] {
   const s = STR[lang];
@@ -102,6 +122,39 @@ export function getSteps(lang: Lang): Step[] {
       options: INTEGRATION_ORDER.map((id) => ({ id, label: L.integration[id] })),
     },
     {
+      kind: "metrics",
+      title: s.quiz.steps.metrics.title,
+      subtitle: s.quiz.steps.metrics.subtitle,
+      groups: [
+        {
+          key: "manualHours",
+          label: s.quiz.steps.metrics.manualHoursLabel,
+          options: MANUAL_HOURS_ORDER.map((id) => ({
+            id,
+            label: L.metric.manualHours[id],
+          })),
+        },
+        {
+          key: "volume",
+          label: s.quiz.steps.metrics.volumeLabel,
+          options: VOLUME_ORDER.map((id) => ({ id, label: L.metric.volume[id] })),
+        },
+        {
+          key: "closeDays",
+          label: s.quiz.steps.metrics.closeDaysLabel,
+          options: CLOSE_DAYS_ORDER.map((id) => ({
+            id,
+            label: L.metric.closeDays[id],
+          })),
+        },
+        {
+          key: "doubleEntry",
+          label: s.quiz.steps.metrics.doubleEntryLabel,
+          options: YESNO_ORDER.map((id) => ({ id, label: L.metric.yesno[id] })),
+        },
+      ],
+    },
+    {
       kind: "pains",
       title: s.quiz.steps.pains.title,
       subtitle: s.quiz.steps.pains.subtitle,
@@ -117,6 +170,10 @@ export const emptyAnswers: Answers = {
   market: "",
   size: "",
   integrations: [],
+  manualHours: "",
+  volume: "",
+  closeDays: "",
+  doubleEntry: "",
   pains: [],
   painText: "",
 };

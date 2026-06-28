@@ -18,6 +18,12 @@ export type MarketId = "us" | "eu" | "ua" | "other";
 
 export type SizeId = "1-5" | "6-20" | "21-50" | "51-200" | "200+";
 
+// Quantifying metrics — power the "impact in numbers" estimate.
+export type ManualHoursId = "lt5" | "5-15" | "15-40" | "40+";
+export type VolumeId = "lt100" | "100-500" | "500-2000" | "2000+";
+export type CloseDaysId = "1-2" | "3-5" | "6-10" | "10+";
+export type YesNoId = "yes" | "no";
+
 // The recommended direction the report points to.
 export type PathKind =
   | "migrate-urgent" // 1C/BAS in Ukraine — legal ban, mandatory migration
@@ -31,6 +37,11 @@ export interface Answers {
   market: MarketId | "";
   size: SizeId | "";
   integrations: string[]; // ids; may include "none"
+  // Quantifying metrics (optional — drive the impact estimate).
+  manualHours: ManualHoursId | ""; // team hours/week on manual entry & reconciliation
+  volume: VolumeId | ""; // orders / invoices per month
+  closeDays: CloseDaysId | ""; // days to close the books each month
+  doubleEntry: YesNoId | ""; // same data keyed into more than one system?
   pains: string[]; // ids
   painText: string; // free text
 }
@@ -60,8 +71,28 @@ export interface Pkg {
   tagline: string;
   deliverables: string[];
   priceFrom: number; // USD
+  priceNote?: string; // e.g. "typical project $3,000–$9,000" / "or $45/hr"
   perMonth?: boolean;
   timeline: string;
+}
+
+// A labeled area sub-score (0..100) shown as a small bar.
+export interface SubScore {
+  id: string;
+  label: string;
+  value: number;
+}
+
+// Quantified impact estimate, derived from the metric answers.
+export interface Impact {
+  weeklyHours: number; // est. team hours/week on manual work
+  monthlyHours: number; // hours/month lost to manual work
+  hourlyRate: number; // stated fully-loaded labour assumption (USD)
+  monthlyCost: number; // $ cost of that manual work / month
+  savingsPct: number; // 0..1 share Odoo automation can remove
+  savedHoursMonth: number; // hours/month recoverable
+  savedCostMonth: number; // $ / month recoverable
+  savedCostYear: number; // $ / year recoverable
 }
 
 export interface Report {
@@ -73,6 +104,9 @@ export interface Report {
   profileLine: string; // "1C · Ukraine · 21–50 users"
   pathKind: PathKind;
   recommendation: Recommendation;
+  subScores: SubScore[]; // 4 area scores
+  impact: Impact; // quantified impact / savings estimate
+  benchmark: string; // "businesses your size on Odoo typically…"
   risks: Risk[]; // sorted high → low
   plan: Stage[];
   packages: Pkg[];
