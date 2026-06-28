@@ -2,8 +2,9 @@ import { createContext, useContext } from "react";
 import type { Lang } from "./types";
 
 /* ============================================================
-   Bilingual content. English is primary (US / EU);
+   Bilingual content. English is primary (Europe / US);
    Ukrainian is the second market. No Russian.
+   Prices in EUR. Plain, human copy. No long dashes.
    ============================================================ */
 
 const en = {
@@ -11,7 +12,7 @@ const en = {
     brand: "ERP Health Audit",
     headerCta: "Free consultation",
     footerTagline:
-      "Odoo ERP — implementation, custom development, and support & care.",
+      "Odoo ERP: setup, custom work, and ongoing support.",
     contactPrefix: "Contact: ",
     toEn: "EN",
     toUk: "УКР",
@@ -22,11 +23,11 @@ const en = {
     badge: "Free · No sign-up · 2 minutes",
     h1a: "Audit your business system",
     h1b: "in 2 minutes",
-    sub: "Answer a few simple questions and get a clear report — a health score, your biggest risks, and a recommended path forward, built around Odoo.",
-    odooNote: "Built around Odoo — the open-source ERP.",
+    sub: "Answer a few simple questions. You get a clear report: a health score, your biggest risks, and a recommended path on Odoo.",
+    odooNote: "Built on Odoo, the open-source ERP.",
     ctaStart: "Start the audit",
     ctaNote: "Your report appears instantly",
-    chips: ["≈ 2–3 minutes", "6 quick steps", "Clear report"],
+    chips: ["2 to 3 minutes", "6 quick steps", "Clear report"],
     whatYouGetTitle: "What you'll get",
     getItems: [
       {
@@ -35,17 +36,63 @@ const en = {
       },
       {
         t: "Prioritized risks",
-        d: "What's wrong and why it matters — in plain language, no jargon.",
+        d: "What's wrong and why it matters, in plain words.",
       },
       {
         t: "A recommended path",
-        d: "Whether to implement, migrate, or optimize — and the stages to get there.",
+        d: "Whether to implement, migrate, or optimize, and the steps to get there.",
       },
       {
         t: "Your impact in numbers",
-        d: "An estimate of the hours — and dollars — manual work is costing you, plus packages and a 'from' price.",
+        d: "What manual work costs you in hours and euros, plus packages and a starting price.",
       },
     ],
+
+    whoForTitle: "Who this is for",
+    whoForLead:
+      "Your company is growing and your systems are starting to slow you down.",
+    whoForItems: [
+      "Owners and operations leads at companies of 5 to 200 people.",
+      "Teams stuck on spreadsheets, 1C/BAS, QuickBooks, SAP, or a half-used Odoo.",
+      "Anyone losing hours to manual data entry and numbers that never match.",
+    ],
+
+    howTitle: "How it works",
+    howSteps: [
+      {
+        t: "1. Answer 6 quick questions",
+        d: "About your system, your team, and what hurts most. Takes 2 to 3 minutes.",
+      },
+      {
+        t: "2. Read your report on screen",
+        d: "Health score, ranked risks, a plan, and what manual work is costing you.",
+      },
+      {
+        t: "3. Book a free call",
+        d: "We go through the report together and agree on next steps. No obligation.",
+      },
+    ],
+
+    whyTitle: "Why work with me",
+    whyItems: [
+      {
+        t: "Senior work, direct",
+        d: "You work straight with the person building it. No account managers, no handoffs.",
+      },
+      {
+        t: "Lean, so faster and cheaper",
+        d: "A tight process with no agency layers. Projects move quicker and cost less.",
+      },
+      {
+        t: "Honest and specific",
+        d: "No fake logos or borrowed client lists. Clear scope, a fixed quote, numbers you can check.",
+      },
+      {
+        t: "Built on open-source Odoo",
+        d: "No per-user license fees. One system for accounting, sales, inventory, and CRM.",
+      },
+    ],
+
     previewKicker: "Sample report",
     previewScoreLabel: "Health score",
     previewZone: "Needs work",
@@ -81,21 +128,21 @@ const en = {
         subtitle: "Select everything you use.",
       },
       metrics: {
-        title: "A few numbers — to put a dollar value on it",
+        title: "A few numbers, to put a value on it",
         subtitle:
           "Rough estimates are fine. These power the savings estimate in your report.",
         manualHoursLabel:
-          "Hours per week your team spends on manual data entry & reconciliation",
+          "Hours per week your team spends on manual data entry and reconciliation",
         volumeLabel: "Orders or invoices per month",
         closeDaysLabel: "Days to close the books each month",
         doubleEntryLabel: "Is the same data entered into more than one system?",
       },
       pains: {
         title: "What hurts the most right now?",
-        subtitle: "Select what applies — and add your own if you like.",
+        subtitle: "Select what applies. Add your own if you like.",
         textLabel: "Describe it in your own words (optional)",
         textPlaceholder:
-          "e.g. month-end takes a week and the numbers never match…",
+          "e.g. month-end takes a week and the numbers never match",
       },
     },
   },
@@ -109,19 +156,19 @@ const en = {
     issueOne: "issue",
     issueMany: "issues",
     noRisks:
-      "No clear problems showed up in the questionnaire — a good sign. A short live check will confirm the full picture.",
+      "No clear problems showed up in the questionnaire, which is a good sign. A short live check will confirm the full picture.",
     planTitle: "Recommended plan",
     packagesTitle: "What you get",
-    packagesIntro: "Three ways we work — pick what fits, or combine them.",
+    packagesIntro: "Three ways to work together. Pick one or combine them.",
     recommendedBadge: "Recommended for you",
     priceLabel: "Estimated price",
     timelineLabel: "Timeline",
     fromWord: "from",
     perMonthWord: "/mo",
     estimateNote:
-      "Figures are estimates. We'll confirm scope and a fixed quote after a short, free diagnostic call.",
+      "These figures are estimates. We confirm scope and a fixed quote after a short, free call.",
     trustLine:
-      "Lean, AI-assisted delivery — senior-level work without agency overhead, so you pay less.",
+      "A lean, direct studio. No agency overhead, no middlemen. Senior-level work, so you pay less.",
     // Area sub-scores
     subScoresTitle: "Where you stand, area by area",
     subScoreLabels: {
@@ -140,25 +187,25 @@ const en = {
     impactCostUnit: "/ month",
     impactSaveLabel: "Recoverable with Odoo",
     impactSaveUnit: "/ year",
-    impactSaveSub: "≈ {hours} hours and {cost} back every month",
+    impactSaveSub: "About {hours} hours and {cost} back every month",
     impactAssumption:
-      "Estimate only — based on ~{rate}/hour fully-loaded labour and Odoo automation removing ~{pct}% of this manual work. We confirm your real numbers on the free call.",
+      "Estimate only. It assumes about {rate}/hour fully loaded labour and Odoo automation removing about {pct}% of this manual work. We confirm your real numbers on the free call.",
     benchmarkKicker: "Benchmark",
     benchmarkBase:
-      "Businesses your size that move to Odoo typically cut manual data entry by 40–60% and bring bank, sales, inventory, and invoicing into one connected system.",
+      "Businesses your size that move to Odoo typically cut manual data entry by 40 to 60% and bring bank, sales, inventory, and invoicing into one connected system.",
     benchmarkClose:
       " They also shorten month-end close from {days} to a couple of days.",
     sev: { high: "High priority", med: "Medium priority", low: "Low priority" },
     zone: { green: "Healthy", amber: "Needs work", red: "At risk" },
     verdict: {
-      green: "Your setup is in good shape — a few targeted improvements.",
+      green: "Your setup is in good shape. A few targeted improvements will help.",
       amber:
         "It works, but problems have built up that slow you down and add risk.",
-      red: "There are serious risks here — worth acting on soon.",
+      red: "There are serious risks here. Worth acting on soon.",
     },
     ctaTitle: "Book a free consultation",
     ctaBody:
-      "We'll walk through your report live, answer your questions, and map out the first steps — no obligation. Leave a contact and we'll reach out.",
+      "We'll go through your report together, answer your questions, and map out the first steps. No obligation. Leave a contact and we'll reach out.",
     print: "Print / save as PDF",
     restart: "Retake the audit",
     form: {
@@ -168,17 +215,17 @@ const en = {
       contactPlaceholder: "you@company.com",
       commentLabel: "Comment",
       commentOptional: "(optional)",
-      commentPlaceholder: "Best time to reach you, extra details…",
+      commentPlaceholder: "Best time to reach you, or any extra details.",
       submit: "Book consultation",
-      submitting: "Sending…",
+      submitting: "Sending",
       okTitle: "Request sent",
       okBody:
-        "We'll be in touch shortly to set up your free consultation. Thank you!",
+        "We'll be in touch shortly to set up your free consultation. Thank you.",
       errorPrefix: "Couldn't send. Email us directly: ",
       errorLink: "send email",
       consent:
-        "By submitting, you agree we may use your contact details to get back to you.",
-      emailSubject: "ERP audit — consultation request",
+        "By submitting, you agree we can use your contact details to get back to you.",
+      emailSubject: "ERP audit: consultation request",
       fScore: "Health score",
       fProfile: "Profile",
       fRisks: "Identified risks",
@@ -208,10 +255,10 @@ const en = {
     },
     market: { us: "United States", eu: "Europe", ua: "Ukraine", other: "Other country" },
     size: {
-      "1-5": "1–5 people",
-      "6-20": "6–20 people",
-      "21-50": "21–50 people",
-      "51-200": "51–200 people",
+      "1-5": "1 to 5 people",
+      "6-20": "6 to 20 people",
+      "21-50": "21 to 50 people",
+      "51-200": "51 to 200 people",
       "200+": "200+ people",
     },
     integration: {
@@ -232,17 +279,17 @@ const en = {
       cost: "Licensing / upkeep too expensive",
     },
     metric: {
-      manualHours: { lt5: "< 5", "5-15": "5–15", "15-40": "15–40", "40+": "40+" },
+      manualHours: { lt5: "< 5", "5-15": "5 to 15", "15-40": "15 to 40", "40+": "40+" },
       volume: {
         lt100: "< 100",
-        "100-500": "100–500",
-        "500-2000": "500–2,000",
+        "100-500": "100 to 500",
+        "500-2000": "500 to 2,000",
         "2000+": "2,000+",
       },
       closeDays: {
-        "1-2": "1–2 days",
-        "3-5": "3–5 days",
-        "6-10": "6–10 days",
+        "1-2": "1 to 2 days",
+        "3-5": "3 to 5 days",
+        "6-10": "6 to 10 days",
         "10+": "10+ days",
       },
       yesno: { no: "No", yes: "Yes" },
@@ -263,7 +310,7 @@ const en = {
     spreadsheets: {
       title: "The business runs on spreadsheets",
       what: "Core operations live in Excel or Google Sheets instead of a real system.",
-      why: "There's no single source of truth: numbers drift, data is easy to break, nothing is automated, and there's no audit trail. It stops scaling the moment the team grows.",
+      why: "Nothing holds the real numbers in one place: figures drift, data is easy to break, nothing is automated, and there's no audit trail. It stops scaling the moment the team grows.",
     },
     "sap-overkill": {
       title: "SAP is heavier than you need",
@@ -277,12 +324,12 @@ const en = {
     },
     "no-integrations": {
       title: "Disconnected systems",
-      what: "Your core tools — bank, e-commerce, CRM, e-invoicing — aren't connected to each other.",
+      what: "Your core tools (bank, e-commerce, CRM, e-invoicing) aren't connected to each other.",
       why: "People re-key the same data in several places. That's slow, error-prone, and gives you no real-time picture of the business.",
     },
     manual: {
       title: "Too much manual work",
-      what: "A lot of routine work is done by hand — re-entering data, copying between tools.",
+      what: "A lot of routine work is done by hand: re-entering data, copying between tools.",
       why: "Manual work eats hours and creates errors. Most of it can be automated, usually with a fast payback.",
     },
     disconnected: {
@@ -323,30 +370,30 @@ const en = {
     "odoo-optimize": {
       title: "Untapped Odoo potential",
       what: "You're on Odoo, but parts of it aren't configured or used to their full value.",
-      why: "Most Odoo setups leave easy wins on the table — automation, integrations, and reporting that pay back quickly.",
+      why: "Most Odoo setups leave easy wins on the table: automation, integrations, and reporting that pay back quickly.",
     },
   },
 
   recommendation: {
     "migrate-urgent": {
-      title: "Migrate off 1C / BAS to Odoo — start now",
-      body: "1C and BAS are sanctioned in Ukraine as of January 2026, so a move is mandatory, not optional. The safe play is a planned, staged migration to Odoo — the leading replacement for banned 1C/BAS — done calmly now rather than under emergency pressure later. We migrate your data and processes with no loss and minimal downtime.",
+      title: "Migrate off 1C / BAS to Odoo, start now",
+      body: "1C and BAS are sanctioned in Ukraine as of January 2026, so a move is mandatory, not optional. The safe play is a planned, staged migration to Odoo, the leading replacement for banned 1C/BAS, done calmly now rather than under emergency pressure later. We move your data and processes across with no loss and minimal downtime.",
     },
     migrate: {
       title: "Plan a migration from 1C / BAS to Odoo",
-      body: "1C and BAS don't fit the US/European market — limited local support, weak compliance fit, and a closed ecosystem. Odoo is a mainstream, open-source ERP with strong local coverage. We recommend a staged migration that moves your data and day-to-day work onto Odoo without disrupting the business.",
+      body: "1C and BAS don't fit the US or European market: limited local support, weak compliance fit, and a closed ecosystem. Odoo is a mainstream, open-source ERP with strong local coverage. We recommend a staged migration that moves your data and day-to-day work onto Odoo without disrupting the business.",
     },
     implement: {
       title: "Implement Odoo as your first real ERP",
-      body: "Running on spreadsheets (or no system) is holding you back. We recommend implementing Odoo as a single source of truth for sales, accounting, inventory, and operations — configured for your market and rolled out in stages so the team adapts smoothly.",
+      body: "Running on spreadsheets (or no system) is holding you back. We recommend implementing Odoo as one system for sales, accounting, inventory, and operations, configured for your market and rolled out in stages so the team adapts smoothly.",
     },
     replace: {
       title: "Consolidate onto Odoo",
-      body: "Your current setup is either heavier and pricier than you need or too narrow to run the whole business. We recommend consolidating onto Odoo — one open-source platform covering accounting, sales, inventory, and CRM at a far lower total cost — with a staged switch-over.",
+      body: "Your current setup is either heavier and pricier than you need, or too narrow to run the whole business. We recommend consolidating onto Odoo, one open-source platform covering accounting, sales, inventory, and CRM at a far lower total cost, with a staged switch-over.",
     },
     optimize: {
       title: "Optimize and extend your Odoo",
-      body: "You're already on the right platform. The opportunity now is to get more out of it: fix what's rough, automate manual steps, connect the tools you use, and add the reports you're missing — all in focused, low-risk improvements.",
+      body: "You're already on the right platform. The opportunity now is to get more out of it: fix what's rough, automate manual steps, connect the tools you use, and add the reports you're missing, all in focused, low-risk improvements.",
     },
   },
 
@@ -434,10 +481,10 @@ const en = {
         "Data import & migration",
         "Team training & go-live support",
       ],
-      priceFrom: 1900,
-      priceNote: "typical project $3,000–$9,000 depending on scope",
+      priceFrom: 1800,
+      priceNote: "typical project €3,000 to €8,000 by scope",
       perMonth: false,
-      timeline: "from 3–6 weeks",
+      timeline: "from 3 to 6 weeks",
     },
     {
       id: "custom",
@@ -451,9 +498,9 @@ const en = {
         "API & third-party connections",
       ],
       priceFrom: 1200,
-      priceNote: "or $45/hr",
+      priceNote: "or €45/hr",
       perMonth: false,
-      timeline: "from 2–4 weeks",
+      timeline: "from 2 to 4 weeks",
     },
     {
       id: "support",
@@ -466,7 +513,7 @@ const en = {
         "Regular health checks",
         "Ongoing small enhancements",
       ],
-      priceFrom: 250,
+      priceFrom: 240,
       perMonth: true,
       timeline: "monthly, ongoing",
     },
@@ -478,7 +525,7 @@ const uk: typeof en = {
     brand: "ERP-аудит",
     headerCta: "Безкоштовна консультація",
     footerTagline:
-      "Odoo ERP — впровадження, доробка та супровід.",
+      "Odoo ERP: впровадження, доробка та супровід.",
     contactPrefix: "Звʼязок: ",
     toEn: "EN",
     toUk: "УКР",
@@ -489,30 +536,76 @@ const uk: typeof en = {
     badge: "Безкоштовно · Без реєстрації · 2 хвилини",
     h1a: "Аудит вашої системи",
     h1b: "за 2 хвилини",
-    sub: "Дайте відповіді на кілька простих питань і отримайте зрозумілий звіт — оцінку стану, головні ризики та рекомендований шлях на базі Odoo.",
-    odooNote: "На базі Odoo — ERP з відкритим кодом.",
+    sub: "Дайте відповіді на кілька простих питань і отримайте зрозумілий звіт: оцінку стану, головні ризики та рекомендований шлях на базі Odoo.",
+    odooNote: "На базі Odoo, ERP з відкритим кодом.",
     ctaStart: "Почати аудит",
     ctaNote: "Звіт зʼявиться одразу на екрані",
-    chips: ["≈ 2–3 хвилини", "6 коротких кроків", "Зрозумілий звіт"],
+    chips: ["2-3 хвилини", "6 коротких кроків", "Зрозумілий звіт"],
     whatYouGetTitle: "Що ви отримаєте",
     getItems: [
       {
         t: "Оцінку стану",
-        d: "Одне зрозуміле число від 0 до 100 — стан вашої бізнес-системи.",
+        d: "Одне зрозуміле число від 0 до 100: стан вашої бізнес-системи.",
       },
       {
         t: "Ризики за пріоритетом",
-        d: "Що не так і чому це важливо — простими словами, без жаргону.",
+        d: "Що не так і чому це важливо, простими словами.",
       },
       {
         t: "Рекомендований шлях",
-        d: "Впроваджувати, мігрувати чи оптимізувати — і які етапи пройти.",
+        d: "Впроваджувати, мігрувати чи оптимізувати, і які етапи пройти.",
       },
       {
         t: "Вашу вигоду в цифрах",
-        d: "Скільки годин — і грошей — коштує ручна робота, плюс пакети й ціна «від».",
+        d: "Скільки годин і грошей коштує ручна робота, плюс пакети й ціна «від».",
       },
     ],
+
+    whoForTitle: "Кому це підходить",
+    whoForLead:
+      "Ваша компанія росте, а системи починають вас гальмувати.",
+    whoForItems: [
+      "Власникам і керівникам операцій у компаніях від 5 до 200 людей.",
+      "Командам на таблицях, 1С/BAS, QuickBooks, SAP або наполовину налаштованому Odoo.",
+      "Усім, хто втрачає години на ручне введення і цифри, що ніколи не сходяться.",
+    ],
+
+    howTitle: "Як це працює",
+    howSteps: [
+      {
+        t: "1. Відповідаєте на 6 коротких питань",
+        d: "Про вашу систему, команду і що болить найбільше. Займає 2-3 хвилини.",
+      },
+      {
+        t: "2. Читаєте звіт на екрані",
+        d: "Оцінка стану, ризики за пріоритетом, план і вартість ручної роботи.",
+      },
+      {
+        t: "3. Безкоштовний дзвінок",
+        d: "Разом проходимо звіт і домовляємось про наступні кроки. Без зобовʼязань.",
+      },
+    ],
+
+    whyTitle: "Чому я",
+    whyItems: [
+      {
+        t: "Робота senior-рівня, напряму",
+        d: "Працюєте напряму з тим, хто робить проєкт. Без акаунт-менеджерів і передач між людьми.",
+      },
+      {
+        t: "Ощадливо, тож швидше і дешевше",
+        d: "Чіткий процес без зайвих ланок агенції. Проєкти йдуть швидше і коштують менше.",
+      },
+      {
+        t: "Чесно і конкретно",
+        d: "Без фейкових лого і чужих клієнтів. Зрозумілий обсяг, фіксована ціна, цифри, які можна перевірити.",
+      },
+      {
+        t: "На відкритому Odoo",
+        d: "Без плати за кожного користувача. Одна система для обліку, продажів, складу і CRM.",
+      },
+    ],
+
     previewKicker: "Приклад звіту",
     previewScoreLabel: "Оцінка стану",
     previewZone: "Є що покращити",
@@ -548,7 +641,7 @@ const uk: typeof en = {
         subtitle: "Відмітьте все, що використовуєте.",
       },
       metrics: {
-        title: "Кілька цифр — щоб порахувати вигоду в грошах",
+        title: "Кілька цифр, щоб порахувати вигоду в грошах",
         subtitle:
           "Приблизних оцінок достатньо. Вони живлять розрахунок економії у вашому звіті.",
         manualHoursLabel:
@@ -559,10 +652,10 @@ const uk: typeof en = {
       },
       pains: {
         title: "Що болить найбільше зараз?",
-        subtitle: "Відмітьте те, що підходить — і за бажанням опишіть своїми словами.",
+        subtitle: "Відмітьте те, що підходить. За бажанням опишіть своїми словами.",
         textLabel: "Опишіть своїми словами (необовʼязково)",
         textPlaceholder:
-          "Напр.: закриття місяця займає тиждень, а цифри ніколи не сходяться…",
+          "Напр.: закриття місяця займає тиждень, а цифри ніколи не сходяться",
       },
     },
   },
@@ -576,11 +669,11 @@ const uk: typeof en = {
     issueOne: "питання",
     issueMany: "питань",
     noRisks:
-      "За анкетою явних проблем не видно — це добрий знак. Точну картину покаже коротка діагностика вживу.",
+      "За анкетою явних проблем не видно, і це добрий знак. Точну картину покаже коротка діагностика вживу.",
     planTitle: "Рекомендований план",
     packagesTitle: "Що ви отримаєте",
     packagesIntro:
-      "Три формати співпраці — оберіть свій або поєднайте їх. Ціни в USD.",
+      "Три формати співпраці. Оберіть свій або поєднайте їх. Ціни в євро.",
     recommendedBadge: "Рекомендовано для вас",
     priceLabel: "Орієнтовна ціна",
     timelineLabel: "Строки",
@@ -589,8 +682,8 @@ const uk: typeof en = {
     estimateNote:
       "Цифри орієнтовні. Точний обсяг і фіксовану вартість узгодимо після короткого безкоштовного дзвінка.",
     trustLine:
-      "Ощадливе впровадження з ШІ — робота senior-рівня без націнок агенцій, тож ви платите менше.",
-    subScoresTitle: "Де ви зараз — за напрямами",
+      "Ощадлива, пряма студія. Без націнок агенцій і посередників. Робота senior-рівня, тож ви платите менше.",
+    subScoresTitle: "Де ви зараз, за напрямами",
     subScoreLabels: {
       data: "Дані та інтеграції",
       automation: "Автоматизація",
@@ -606,12 +699,12 @@ const uk: typeof en = {
     impactCostUnit: "/ місяць",
     impactSaveLabel: "Можна повернути з Odoo",
     impactSaveUnit: "/ рік",
-    impactSaveSub: "≈ {hours} годин і {cost} назад щомісяця",
+    impactSaveSub: "Близько {hours} годин і {cost} назад щомісяця",
     impactAssumption:
-      "Лише орієнтовно — з розрахунку ~{rate}/год повної вартості праці та автоматизації Odoo, що прибирає ~{pct}% цієї ручної роботи. Ваші реальні цифри уточнимо на безкоштовному дзвінку.",
+      "Лише орієнтовно. З розрахунку близько {rate}/год повної вартості праці та автоматизації Odoo, що прибирає близько {pct}% цієї ручної роботи. Ваші реальні цифри уточнимо на безкоштовному дзвінку.",
     benchmarkKicker: "Орієнтир",
     benchmarkBase:
-      "Бізнеси вашого розміру, що переходять на Odoo, зазвичай скорочують ручне введення даних на 40–60% і зводять банк, продажі, склад і рахунки в одну зв'язану систему.",
+      "Бізнеси вашого розміру, що переходять на Odoo, зазвичай скорочують ручне введення даних на 40-60% і зводять банк, продажі, склад і рахунки в одну зв'язану систему.",
     benchmarkClose:
       " А ще скорочують закриття місяця з {days} до кількох днів.",
     sev: {
@@ -621,14 +714,14 @@ const uk: typeof en = {
     },
     zone: { green: "Здорова система", amber: "Є що покращити", red: "Потребує уваги" },
     verdict: {
-      green: "Система в непоганій формі — є точкові покращення.",
+      green: "Система в непоганій формі. Є точкові покращення.",
       amber:
         "Працює, але накопичились проблеми, які гальмують і створюють ризики.",
-      red: "Тут є серйозні ризики — варто зайнятися ними найближчим часом.",
+      red: "Тут є серйозні ризики. Варто зайнятися ними найближчим часом.",
     },
     ctaTitle: "Безкоштовна консультація",
     ctaBody:
-      "Розберемо ваш звіт наживо, відповімо на питання і намітимо перші кроки — без зобовʼязань. Залиште контакт, і ми звʼяжемося з вами.",
+      "Розберемо ваш звіт наживо, відповімо на питання і намітимо перші кроки. Без зобовʼязань. Залиште контакт, і ми звʼяжемося з вами.",
     print: "Друк / зберегти PDF",
     restart: "Пройти аудит знову",
     form: {
@@ -638,17 +731,17 @@ const uk: typeof en = {
       contactPlaceholder: "you@company.com",
       commentLabel: "Коментар",
       commentOptional: "(необовʼязково)",
-      commentPlaceholder: "Зручний час, додаткові деталі…",
+      commentPlaceholder: "Зручний час або додаткові деталі.",
       submit: "Записатися на консультацію",
-      submitting: "Надсилаємо…",
+      submitting: "Надсилаємо",
       okTitle: "Заявку надіслано",
       okBody:
-        "Звʼяжемося найближчим часом, щоб призначити безкоштовну консультацію. Дякуємо!",
+        "Звʼяжемося найближчим часом, щоб призначити безкоштовну консультацію. Дякуємо.",
       errorPrefix: "Не вдалося надіслати. Напишіть напряму: ",
       errorLink: "надіслати лист",
       consent:
         "Натискаючи кнопку, ви погоджуєтесь на використання контактів для звʼязку.",
-      emailSubject: "ERP-аудит — заявка на консультацію",
+      emailSubject: "ERP-аудит: заявка на консультацію",
       fScore: "Оцінка стану",
       fProfile: "Профіль",
       fRisks: "Виявлені ризики",
@@ -678,10 +771,10 @@ const uk: typeof en = {
     },
     market: { us: "США", eu: "Європа", ua: "Україна", other: "Інша країна" },
     size: {
-      "1-5": "1–5 осіб",
-      "6-20": "6–20 осіб",
-      "21-50": "21–50 осіб",
-      "51-200": "51–200 осіб",
+      "1-5": "1-5 осіб",
+      "6-20": "6-20 осіб",
+      "21-50": "21-50 осіб",
+      "51-200": "51-200 осіб",
       "200+": "200+ осіб",
     },
     integration: {
@@ -702,17 +795,17 @@ const uk: typeof en = {
       cost: "Дорогі ліцензії / обслуговування",
     },
     metric: {
-      manualHours: { lt5: "< 5", "5-15": "5–15", "15-40": "15–40", "40+": "40+" },
+      manualHours: { lt5: "< 5", "5-15": "5-15", "15-40": "15-40", "40+": "40+" },
       volume: {
         lt100: "< 100",
-        "100-500": "100–500",
-        "500-2000": "500–2 000",
+        "100-500": "100-500",
+        "500-2000": "500-2 000",
         "2000+": "2 000+",
       },
       closeDays: {
-        "1-2": "1–2 дні",
-        "3-5": "3–5 днів",
-        "6-10": "6–10 днів",
+        "1-2": "1-2 дні",
+        "3-5": "3-5 днів",
+        "6-10": "6-10 днів",
         "10+": "10+ днів",
       },
       yesno: { no: "Ні", yes: "Так" },
@@ -723,7 +816,7 @@ const uk: typeof en = {
     "legal-ban": {
       title: "1С / BAS заборонені в Україні",
       what: "З січня 2026 року 1С і BAS під санкціями в Україні, і їх поступово виводять із бізнес-використання.",
-      why: "Залишатися на санкційній системі — прямий юридичний і операційний ризик: немає легальних оновлень, офіційної підтримки, є ризик під час перевірок. Планова міграція зараз значно безпечніша й дешевша, ніж екстрена потім.",
+      why: "Залишатися на санкційній системі це прямий юридичний і операційний ризик: немає легальних оновлень, офіційної підтримки, є ризик під час перевірок. Планова міграція зараз значно безпечніша й дешевша, ніж екстрена потім.",
     },
     "legacy-foreign": {
       title: "1С / BAS не підходять для вашого ринку",
@@ -733,7 +826,7 @@ const uk: typeof en = {
     spreadsheets: {
       title: "Бізнес тримається на таблицях",
       what: "Ключові операції живуть в Excel або Google Sheets замість реальної системи.",
-      why: "Немає єдиного джерела правди: цифри розходяться, дані легко зіпсувати, нічого не автоматизовано, немає історії змін. Це перестає масштабуватися щойно команда зростає.",
+      why: "Немає єдиного місця з реальними цифрами: дані розходяться, їх легко зіпсувати, нічого не автоматизовано, немає історії змін. Це перестає масштабуватися щойно команда зростає.",
     },
     "sap-overkill": {
       title: "SAP важчий, ніж вам потрібно",
@@ -747,12 +840,12 @@ const uk: typeof en = {
     },
     "no-integrations": {
       title: "Роз'єднані системи",
-      what: "Ваші ключові інструменти — банк, e-commerce, CRM, ЕДО — не зв'язані між собою.",
+      what: "Ваші ключові інструменти (банк, e-commerce, CRM, ЕДО) не зв'язані між собою.",
       why: "Люди вводять ті самі дані в кількох місцях. Це повільно, з помилками і не дає реальної картини бізнесу в моменті.",
     },
     manual: {
       title: "Забагато ручної роботи",
-      what: "Багато рутини роблять руками — переносять дані, копіюють між інструментами.",
+      what: "Багато рутини роблять руками: переносять дані, копіюють між інструментами.",
       why: "Ручна робота з'їдає години й породжує помилки. Більшість можна автоматизувати, зазвичай зі швидкою окупністю.",
     },
     disconnected: {
@@ -783,7 +876,7 @@ const uk: typeof en = {
     support: {
       title: "Слабка підтримка / залежність від однієї людини",
       what: "Підтримка повільна, або все тримається на одній людині, яка знає систему.",
-      why: "Якщо ця людина піде — ви застрягли. Потрібне підтримуване ПЗ і супровід, що не залежить від однієї особи.",
+      why: "Якщо ця людина піде, ви застрягли. Потрібне підтримуване ПЗ і супровід, що не залежить від однієї особи.",
     },
     cost: {
       title: "Ліцензії й обслуговування надто дорогі",
@@ -793,30 +886,30 @@ const uk: typeof en = {
     "odoo-optimize": {
       title: "Невикористаний потенціал Odoo",
       what: "Ви на Odoo, але частина можливостей не налаштована або не використовується повністю.",
-      why: "Більшість впроваджень Odoo лишають прості виграші на столі — автоматизацію, інтеграції та звітність, що швидко окуповуються.",
+      why: "Більшість впроваджень Odoo лишають прості виграші на столі: автоматизацію, інтеграції та звітність, що швидко окуповуються.",
     },
   },
 
   recommendation: {
     "migrate-urgent": {
-      title: "Мігрувати з 1С / BAS на Odoo — починати зараз",
-      body: "1С і BAS під санкціями в Україні з січня 2026 року, тож перехід обов'язковий, а не за бажанням. Безпечний варіант — планова поетапна міграція на Odoo, головну заміну заборонених 1С/BAS, спокійно зараз, а не в авральному режимі потім. Ми переносимо ваші дані й процеси без втрат і з мінімальним простоєм.",
+      title: "Мігрувати з 1С / BAS на Odoo, починати зараз",
+      body: "1С і BAS під санкціями в Україні з січня 2026 року, тож перехід обов'язковий, а не за бажанням. Безпечний варіант: планова поетапна міграція на Odoo, головна заміна заборонених 1С/BAS, спокійно зараз, а не в авральному режимі потім. Ми переносимо ваші дані й процеси без втрат і з мінімальним простоєм.",
     },
     migrate: {
       title: "Спланувати міграцію з 1С / BAS на Odoo",
-      body: "1С і BAS не підходять для ринку США/Європи — обмежена місцева підтримка, слабка відповідність і закрита екосистема. Odoo — поширена ERP з відкритим кодом і сильним місцевим покриттям. Рекомендуємо поетапну міграцію, що переносить ваші дані й щоденну роботу на Odoo без зупинки бізнесу.",
+      body: "1С і BAS не підходять для ринку США та Європи: обмежена місцева підтримка, слабка відповідність і закрита екосистема. Odoo є поширеною ERP з відкритим кодом і сильним місцевим покриттям. Рекомендуємо поетапну міграцію, що переносить ваші дані й щоденну роботу на Odoo без зупинки бізнесу.",
     },
     implement: {
       title: "Впровадити Odoo як вашу першу справжню ERP",
-      body: "Робота на таблицях (або без системи) стримує вас. Рекомендуємо впровадити Odoo як єдине джерело правди для продажів, обліку, складу й операцій — налаштоване під ваш ринок і запущене поетапно, щоб команда звикала плавно.",
+      body: "Робота на таблицях (або без системи) стримує вас. Рекомендуємо впровадити Odoo як єдину систему для продажів, обліку, складу й операцій, налаштовану під ваш ринок і запущену поетапно, щоб команда звикала плавно.",
     },
     replace: {
       title: "Зібрати все в Odoo",
-      body: "Поточна система або важча й дорожча, ніж потрібно, або надто вузька, щоб вести весь бізнес. Рекомендуємо консолідацію на Odoo — одну open-source платформу для обліку, продажів, складу й CRM за значно нижчу загальну вартість — з поетапним переходом.",
+      body: "Поточна система або важча й дорожча, ніж потрібно, або надто вузька, щоб вести весь бізнес. Рекомендуємо консолідацію на Odoo: одну open-source платформу для обліку, продажів, складу й CRM за значно нижчу загальну вартість, з поетапним переходом.",
     },
     optimize: {
       title: "Оптимізувати й розширити ваш Odoo",
-      body: "Ви вже на правильній платформі. Тепер можливість — отримати від неї більше: виправити шорсткості, автоматизувати ручні кроки, підключити ваші інструменти й додати потрібні звіти — усе невеликими, малоризиковими кроками.",
+      body: "Ви вже на правильній платформі. Тепер можливість отримати від неї більше: виправити шорсткості, автоматизувати ручні кроки, підключити ваші інструменти й додати потрібні звіти, усе невеликими, малоризиковими кроками.",
     },
   },
 
@@ -904,10 +997,10 @@ const uk: typeof en = {
         "Імпорт і міграція даних",
         "Навчання команди й підтримка на старті",
       ],
-      priceFrom: 1900,
-      priceNote: "типовий проєкт $3 000–$9 000 залежно від обсягу",
+      priceFrom: 1800,
+      priceNote: "типовий проєкт €3 000 до €8 000 залежно від обсягу",
       perMonth: false,
-      timeline: "від 3–6 тижнів",
+      timeline: "від 3 до 6 тижнів",
     },
     {
       id: "custom",
@@ -921,9 +1014,9 @@ const uk: typeof en = {
         "API та сторонні підключення",
       ],
       priceFrom: 1200,
-      priceNote: "або $45/год",
+      priceNote: "або €45/год",
       perMonth: false,
-      timeline: "від 2–4 тижнів",
+      timeline: "від 2 до 4 тижнів",
     },
     {
       id: "support",
@@ -936,7 +1029,7 @@ const uk: typeof en = {
         "Регулярні перевірки стану",
         "Постійні невеликі покращення",
       ],
-      priceFrom: 250,
+      priceFrom: 240,
       perMonth: true,
       timeline: "щомісяця, постійно",
     },
@@ -959,9 +1052,9 @@ export function summarize(lang: Lang, n: number, high: number): string {
   return `We flagged ${n} ${issue}${hi}. The recommended path below is built around your situation.`;
 }
 
-/* Currency formatting — USD across both languages (B2B standard). */
-export function formatUsd(n: number): string {
-  return "$" + n.toLocaleString("en-US");
+/* Currency formatting. EUR across both languages (Europe-first). */
+export function formatEur(n: number): string {
+  return "€" + n.toLocaleString("en-US");
 }
 
 /* ---- Language context ---- */

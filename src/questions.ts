@@ -34,7 +34,7 @@ export interface PainStep {
 }
 
 // One screen bundling several short numeric pickers (one row each),
-// so the questionnaire stays ~2–3 min while capturing impact signals.
+// so the questionnaire stays about 2-3 min while capturing impact signals.
 export interface MetricGroup {
   key: keyof Answers;
   label: string;

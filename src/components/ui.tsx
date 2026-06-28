@@ -70,7 +70,7 @@ export function ArrowIcon({ className }: { className?: string }) {
   );
 }
 
-// Heartbeat / pulse — ties to the "health audit" idea.
+// Heartbeat / pulse icon for the "health audit" idea.
 export function PulseIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">

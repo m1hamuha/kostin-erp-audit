@@ -175,7 +175,7 @@ function repWeeklyHours(a: Answers): number {
   return h;
 }
 
-// Stated, market-aware fully-loaded labour assumption (USD/hr).
+// Stated, market-aware fully loaded labour assumption (EUR/hr).
 function hourlyRate(market: Answers["market"]): number {
   switch (market) {
     case "us":

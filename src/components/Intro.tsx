@@ -44,6 +44,29 @@ export function Intro({ onStart }: { onStart: () => void }) {
         </div>
       </section>
 
+      {/* Who this is for */}
+      <section className="border-t border-line py-12 md:py-16">
+        <h2 className="font-display text-[1.6rem] font-extrabold tracking-tight text-ink sm:text-[2rem]">
+          {s.intro.whoForTitle}
+        </h2>
+        <p className="mt-3 max-w-2xl text-[1.15rem] font-semibold leading-relaxed text-ink">
+          {s.intro.whoForLead}
+        </p>
+        <ul className="mt-6 grid gap-3 sm:grid-cols-3">
+          {s.intro.whoForItems.map((it) => (
+            <li
+              key={it}
+              className="flex items-start gap-3 rounded-xl2 border border-line bg-surface p-5 text-[1.02rem] leading-relaxed text-ink shadow-card"
+            >
+              <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-accent-soft text-accent">
+                <CheckIcon className="h-4 w-4" />
+              </span>
+              <span>{it}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
       {/* What you get */}
       <section className="border-t border-line py-12 md:py-16">
         <h2 className="font-display text-[1.6rem] font-extrabold tracking-tight text-ink sm:text-[2rem]">
@@ -71,6 +94,58 @@ export function Intro({ onStart }: { onStart: () => void }) {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* How it works */}
+      <section className="border-t border-line py-12 md:py-16">
+        <h2 className="font-display text-[1.6rem] font-extrabold tracking-tight text-ink sm:text-[2rem]">
+          {s.intro.howTitle}
+        </h2>
+        <div className="mt-7 grid gap-4 sm:grid-cols-3">
+          {s.intro.howSteps.map((st) => (
+            <div
+              key={st.t}
+              className="rounded-xl2 border border-line bg-surface p-6 shadow-card"
+            >
+              <h3 className="font-display text-[1.15rem] font-bold leading-snug text-ink">
+                {st.t}
+              </h3>
+              <p className="mt-2 text-[1.02rem] leading-relaxed text-ink">
+                {st.d}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Why work with me */}
+      <section className="border-t border-line py-12 md:py-16">
+        <h2 className="font-display text-[1.6rem] font-extrabold tracking-tight text-ink sm:text-[2rem]">
+          {s.intro.whyTitle}
+        </h2>
+        <div className="mt-7 grid gap-4 sm:grid-cols-2">
+          {s.intro.whyItems.map((it) => (
+            <div
+              key={it.t}
+              className="rounded-xl2 border border-line bg-surface p-5 shadow-card"
+            >
+              <div className="flex items-start gap-3">
+                <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-accent-soft text-accent">
+                  <CheckIcon className="h-4 w-4" />
+                </span>
+                <div>
+                  <h3 className="font-display text-[1.15rem] font-bold text-ink">
+                    {it.t}
+                  </h3>
+                  <p className="mt-1 text-[1.02rem] leading-relaxed text-ink">
+                    {it.d}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
         <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
           <Button onClick={onStart} className="w-full sm:w-auto">
             {s.intro.ctaStart}

@@ -1,5 +1,5 @@
 import type { Report, Risk, Pkg, SubScore, Impact } from "../types";
-import { useLang, useStr, formatUsd } from "../i18n";
+import { useLang, useStr, formatEur } from "../i18n";
 import { HealthScore } from "./HealthScore";
 import { ContactForm } from "./ContactForm";
 import { Button, cx, CheckIcon, ArrowIcon } from "./ui";
@@ -62,7 +62,7 @@ export function ReportView({
       {/* Area sub-scores */}
       <SubScores subScores={report.subScores} />
 
-      {/* Quantified impact — the "wow" */}
+      {/* Quantified impact: the headline number */}
       <ImpactBlock impact={report.impact} />
 
       {/* Benchmark */}
@@ -155,7 +155,7 @@ export function ReportView({
         </div>
       </section>
 
-      {/* Packages — What you get */}
+      {/* Packages: what you get */}
       <section className="mt-12">
         <h2 className="font-display text-[1.6rem] font-extrabold tracking-tight text-ink sm:text-[2rem]">
           {s.report.packagesTitle}
@@ -237,7 +237,7 @@ function PackageCard({ pkg, recommended }: { pkg: Pkg; recommended: boolean }) {
           {s.report.fromWord}
         </span>
         <span className="tnum font-display text-[1.9rem] font-extrabold text-ink">
-          {formatUsd(pkg.priceFrom)}
+          {formatEur(pkg.priceFrom)}
         </span>
         {pkg.perMonth && (
           <span className="font-display text-[1.05rem] font-bold text-ink-2">
@@ -315,9 +315,9 @@ function ImpactBlock({ impact }: { impact: Impact }) {
   const r = useStr().report;
   const sub = r.impactSaveSub
     .replace("{hours}", String(impact.savedHoursMonth))
-    .replace("{cost}", formatUsd(impact.savedCostMonth));
+    .replace("{cost}", formatEur(impact.savedCostMonth));
   const assumption = r.impactAssumption
-    .replace("{rate}", formatUsd(impact.hourlyRate))
+    .replace("{rate}", formatEur(impact.hourlyRate))
     .replace("{pct}", String(Math.round(impact.savingsPct * 100)));
   return (
     <section className="mt-6">
@@ -341,12 +341,12 @@ function ImpactBlock({ impact }: { impact: Impact }) {
               label={r.impactHoursLabel}
             />
             <Stat
-              value={formatUsd(impact.monthlyCost)}
+              value={formatEur(impact.monthlyCost)}
               unit={r.impactCostUnit}
               label={r.impactCostLabel}
             />
             <Stat
-              value={formatUsd(impact.savedCostYear)}
+              value={formatEur(impact.savedCostYear)}
               unit={r.impactSaveUnit}
               label={r.impactSaveLabel}
               sub={sub}

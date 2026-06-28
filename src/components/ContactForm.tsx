@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Report } from "../types";
-import { useStr, formatUsd } from "../i18n";
+import { useStr, formatEur } from "../i18n";
 import { Button, CheckIcon } from "./ui";
 
 const OWNER_EMAIL = "kostinmihail40@gmail.com";
@@ -16,9 +16,9 @@ export function ContactForm({ report }: { report: Report }) {
   const [status, setStatus] = useState<Status>("idle");
 
   const recPkg =
-    report.packages.find((p) => p.id === report.recommendedPackage)?.name ?? "—";
+    report.packages.find((p) => p.id === report.recommendedPackage)?.name ?? "-";
   const priceTag =
-    formatUsd(
+    formatEur(
       report.packages.find((p) => p.id === report.recommendedPackage)?.priceFrom ??
         0,
     ) + (report.recommendedPackage === "support" ? s.report.perMonthWord : "");
@@ -46,9 +46,9 @@ export function ContactForm({ report }: { report: Report }) {
         },
         body: JSON.stringify({
           _subject: f.emailSubject,
-          Name: name || "—",
+          Name: name || "-",
           Contact: contact,
-          Comment: comment || "—",
+          Comment: comment || "-",
           Audit_result: summary,
         }),
       });

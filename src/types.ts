@@ -18,7 +18,7 @@ export type MarketId = "us" | "eu" | "ua" | "other";
 
 export type SizeId = "1-5" | "6-20" | "21-50" | "51-200" | "200+";
 
-// Quantifying metrics — power the "impact in numbers" estimate.
+// Quantifying metrics that power the "impact in numbers" estimate.
 export type ManualHoursId = "lt5" | "5-15" | "15-40" | "40+";
 export type VolumeId = "lt100" | "100-500" | "500-2000" | "2000+";
 export type CloseDaysId = "1-2" | "3-5" | "6-10" | "10+";
@@ -26,18 +26,18 @@ export type YesNoId = "yes" | "no";
 
 // The recommended direction the report points to.
 export type PathKind =
-  | "migrate-urgent" // 1C/BAS in Ukraine — legal ban, mandatory migration
-  | "migrate" // 1C/BAS in a foreign market — wrong fit, plan a migration
-  | "implement" // spreadsheets / nothing — first real ERP
-  | "replace" // SAP / QuickBooks — consolidate onto Odoo
-  | "optimize"; // already on Odoo — improve & extend
+  | "migrate-urgent" // 1C/BAS in Ukraine: legal ban, mandatory migration
+  | "migrate" // 1C/BAS in a foreign market: wrong fit, plan a migration
+  | "implement" // spreadsheets / nothing: first real ERP
+  | "replace" // SAP / QuickBooks: consolidate onto Odoo
+  | "optimize"; // already on Odoo: improve and extend
 
 export interface Answers {
   system: SystemId | "";
   market: MarketId | "";
   size: SizeId | "";
   integrations: string[]; // ids; may include "none"
-  // Quantifying metrics (optional — drive the impact estimate).
+  // Quantifying metrics (optional; they drive the impact estimate).
   manualHours: ManualHoursId | ""; // team hours/week on manual entry & reconciliation
   volume: VolumeId | ""; // orders / invoices per month
   closeDays: CloseDaysId | ""; // days to close the books each month
@@ -70,8 +70,8 @@ export interface Pkg {
   name: string;
   tagline: string;
   deliverables: string[];
-  priceFrom: number; // USD
-  priceNote?: string; // e.g. "typical project $3,000–$9,000" / "or $45/hr"
+  priceFrom: number; // EUR
+  priceNote?: string; // e.g. "typical project EUR 3,000 to 8,000" / "or EUR 45/hr"
   perMonth?: boolean;
   timeline: string;
 }
@@ -87,7 +87,7 @@ export interface SubScore {
 export interface Impact {
   weeklyHours: number; // est. team hours/week on manual work
   monthlyHours: number; // hours/month lost to manual work
-  hourlyRate: number; // stated fully-loaded labour assumption (USD)
+  hourlyRate: number; // stated fully loaded labour assumption (EUR)
   monthlyCost: number; // $ cost of that manual work / month
   savingsPct: number; // 0..1 share Odoo automation can remove
   savedHoursMonth: number; // hours/month recoverable
@@ -101,13 +101,13 @@ export interface Report {
   zoneLabel: string;
   verdict: string; // one-line headline verdict
   summary: string; // 2-4 sentence summary
-  profileLine: string; // "1C · Ukraine · 21–50 users"
+  profileLine: string; // "1C · Ukraine · 21 to 50 users"
   pathKind: PathKind;
   recommendation: Recommendation;
   subScores: SubScore[]; // 4 area scores
   impact: Impact; // quantified impact / savings estimate
   benchmark: string; // "businesses your size on Odoo typically…"
-  risks: Risk[]; // sorted high → low
+  risks: Risk[]; // sorted high to low
   plan: Stage[];
   packages: Pkg[];
   recommendedPackage: Pkg["id"];
