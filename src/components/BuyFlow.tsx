@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Pkg, Report } from "../types";
 import { useStr, formatEur } from "../i18n";
+import { track } from "../analyticsConfig";
 import { Button, CheckIcon, ArrowIcon, cx } from "./ui";
 import { PaymentButtons } from "./PaymentButtons";
 
@@ -31,6 +32,15 @@ export function BuyFlow({
   const [selected, setSelected] = useState<Pkg | null>(initial);
   const [done, setDone] = useState(false);
   const [paid, setPaid] = useState(false);
+
+  // Fire plan_chosen once per distinct plan selection.
+  const trackedPlan = useRef<string | null>(null);
+  useEffect(() => {
+    if (selected && trackedPlan.current !== selected.id) {
+      trackedPlan.current = selected.id;
+      track("plan_chosen", { plan: selected.id, price: selected.priceFrom });
+    }
+  }, [selected]);
 
   // Lock background scroll + close on Escape.
   useEffect(() => {
@@ -180,9 +190,16 @@ function PlanChooser({
               {p.tagline}
             </p>
 
+            {isEntry && (
+              <p className="mt-2 inline-flex items-center gap-1.5 text-[0.92rem] font-bold text-accent-ink">
+                <CheckIcon className="h-3.5 w-3.5" />
+                {b.cancelAnytime}
+              </p>
+            )}
+
             <div className="mt-auto pt-5">
               <Button onClick={() => onChoose(p)} size="md" className="w-full">
-                {b.chooseBtn}
+                {isEntry ? b.startWithSupport : b.chooseBtn}
                 <ArrowIcon className="h-4 w-4" />
               </Button>
             </div>

@@ -10,7 +10,7 @@ Positioned for three markets: **US**, **Europe**, and **Ukraine**.
 ## Key logic
 
 - If the current system is **1C or BAS** and the market is **Ukraine**, the report
-  flags the **legal ban** (sanctioned January 2026 — mandatory migration) and
+  flags the **legal ban** (sanctioned January 2026 - mandatory migration) and
   recommends a safe, staged migration to Odoo.
 - For 1C/BAS in foreign markets, spreadsheets, SAP, or QuickBooks it recommends the
   right Odoo path (migrate / implement / consolidate); for existing Odoo it
@@ -18,7 +18,7 @@ Positioned for three markets: **US**, **Europe**, and **Ukraine**.
 
 ## Service packages
 
-Implementation · Custom development · Support & care — each with concrete
+Implementation · Custom development · Support & care - each with concrete
 deliverables, a "from" price, and a timeline (all marked as estimates).
 
 ## Stack
@@ -75,6 +75,28 @@ How each package charges:
 When you create the subscription plan, set the failed-payment handling to
 **retry, then cancel after 3 failed attempts**. PayPal then chases failed
 renewals for you automatically.
+
+## Analytics / ad tracking
+
+All tracking IDs live in **one file**: `src/analyticsConfig.ts`. Until you paste
+an ID the site loads nothing extra (empty = no-op, no errors, no cookies). After
+editing, run `npm run build` and push.
+
+| In the file | What to paste | Where to get it |
+| --- | --- | --- |
+| `GA4_MEASUREMENT_ID` | Your GA4 **Measurement ID** (looks like `G-XXXXXXXXXX`) | Google Analytics, **Admin > Data streams**, open your web stream, copy **Measurement ID** |
+| `META_PIXEL_ID` | Your Meta **Pixel ID** (a long number) | Meta **Events Manager > Data sources**, open your Pixel, **Settings**, copy the **Pixel ID** |
+
+Events fired automatically (so you can build ad audiences and conversions):
+
+- `audit_started` - visitor begins the questionnaire
+- `audit_completed` - report is shown
+- `lead_captured` - email submitted on the report (also sent to Meta as **Lead**)
+- `plan_chosen` - a plan is picked (Meta **AddToCart**)
+- `begin_checkout` - the buy flow opens (Meta **InitiateCheckout**)
+
+For Meta ad optimization, set your campaign to optimize for **Lead** or
+**InitiateCheckout**, which map to the events above.
 
 ## Dunning (failed payments)
 

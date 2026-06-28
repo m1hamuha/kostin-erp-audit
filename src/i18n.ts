@@ -206,6 +206,26 @@ const en = {
     ctaTitle: "Ready to get started?",
     ctaBody:
       "Pick the package that fits, pay securely, and tell us about your setup. You get a clear status at every step, from kickoff to delivery.",
+    // Lead capture (shown after the report so the value lands first)
+    leadKicker: "Get it in writing",
+    leadTitle: "Email me my full report and a fixed quote",
+    leadBody:
+      "Drop your email. I send your full report plus a fixed quote for your exact situation, no back and forth. Most owners start on Support, €240/mo, cancel anytime.",
+    leadPlaceholder: "you@company.com",
+    leadButton: "Send it to me",
+    leadSending: "Sending",
+    leadDoneTitle: "On its way",
+    leadDoneBody:
+      "Check your inbox shortly. Your full report and a fixed quote are on the way to you.",
+    leadError: "Couldn't send. Email me directly: ",
+    leadErrorLink: "send email",
+    leadSubject: "New lead - report",
+    // Easy-entry emphasis: the friction-free first yes
+    easyKicker: "Easiest way to start",
+    easyTitle: "Start with Support, €240/mo",
+    easyBody:
+      "The simplest first step. Cancel anytime. I keep your Odoo healthy and we pick up the bigger work from there. No long commitment to begin.",
+    easyCta: "Start with Support",
     print: "Print / save as PDF",
     restart: "Retake the audit",
   },
@@ -214,6 +234,8 @@ const en = {
     getStarted: "Get started",
     startBtn: "Get started",
     startCtaNote: "Secure checkout. Bank transfer available.",
+    cancelAnytime: "Cancel anytime",
+    startWithSupport: "Start with Support",
     modalKicker: "What happens next",
     chooseKicker: "Choose your plan",
     chooseTitle: "Start light, scale when ready",
@@ -772,6 +794,26 @@ const uk: typeof en = {
     ctaTitle: "Готові почати?",
     ctaBody:
       "Виберіть відповідний пакет, оплатіть безпечно і розкажіть про своє налаштування. Ви бачите чіткий статус на кожному кроці, від старту до результату.",
+    // Lead capture
+    leadKicker: "Отримайте письмово",
+    leadTitle: "Надішліть мені звіт і фіксовану ціну",
+    leadBody:
+      "Залиште e-mail. Я надішлю повний звіт і фіксовану ціну саме під вашу ситуацію, без зайвого листування. Більшість починають із Супроводу, €240/міс, скасувати можна будь-коли.",
+    leadPlaceholder: "you@company.com",
+    leadButton: "Надіслати мені",
+    leadSending: "Надсилаємо",
+    leadDoneTitle: "Вже летить",
+    leadDoneBody:
+      "Незабаром перевірте пошту. Повний звіт і фіксована ціна вже в дорозі до вас.",
+    leadError: "Не вдалося надіслати. Напишіть мені напряму: ",
+    leadErrorLink: "надіслати лист",
+    leadSubject: "New lead - report",
+    // Easy-entry emphasis
+    easyKicker: "Найпростіший старт",
+    easyTitle: "Почніть із Супроводу, €240/міс",
+    easyBody:
+      "Найпростіший перший крок. Скасувати можна будь-коли. Я тримаю ваш Odoo здоровим, а більшу роботу беремо далі. Жодних довгих зобовʼязань на старті.",
+    easyCta: "Почати із Супроводу",
     print: "Друк / зберегти PDF",
     restart: "Пройти аудит знову",
   },
@@ -780,6 +822,8 @@ const uk: typeof en = {
     getStarted: "Почати",
     startBtn: "Почати",
     startCtaNote: "Безпечна оплата. Доступний банківський переказ.",
+    cancelAnytime: "Скасувати будь-коли",
+    startWithSupport: "Почати із Супроводу",
     modalKicker: "Що буде далі",
     chooseKicker: "Оберіть свій план",
     chooseTitle: "Почніть легко, зростайте згодом",

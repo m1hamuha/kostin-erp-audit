@@ -1,9 +1,12 @@
 import { useState } from "react";
 import type { Report, Risk, Pkg, SubScore, Impact } from "../types";
 import { useLang, useStr, formatEur } from "../i18n";
+import { track } from "../analyticsConfig";
 import { HealthScore } from "./HealthScore";
 import { BuyFlow } from "./BuyFlow";
 import { Button, cx, CheckIcon, ArrowIcon } from "./ui";
+
+const OWNER_EMAIL = "kostinmihail40@gmail.com";
 
 const SEV_STYLE: Record<Risk["severity"], { dot: string; chip: string }> = {
   high: { dot: "bg-risk-high", chip: "text-risk-high bg-risk-high/10" },
@@ -22,9 +25,11 @@ export function ReportView({
   const s = useStr();
   const [buyOpen, setBuyOpen] = useState(false);
   const [buyInitial, setBuyInitial] = useState<Pkg | null>(null);
+  const supportPkg = report.packages.find((p) => p.id === "support") ?? null;
   const openBuy = (p: Pkg | null) => {
     setBuyInitial(p);
     setBuyOpen(true);
+    track("begin_checkout", p ? { plan: p.id, price: p.priceFrom } : {});
   };
   const today = new Date().toLocaleDateString(lang === "uk" ? "uk-UA" : "en-US", {
     day: "numeric",
@@ -40,7 +45,7 @@ export function ReportView({
           <p className="font-display text-[0.85rem] font-bold uppercase tracking-wider text-white/60">
             {s.report.kicker} · {today}
           </p>
-          <h1 className="mt-2 font-display text-[1.9rem] font-extrabold leading-tight tracking-tight md:text-[2.5rem]">
+          <h1 className="mt-2 font-display text-[1.9rem] font-extrabold leading-tight tracking-tight text-white md:text-[2.5rem]">
             {s.report.title}
           </h1>
           <p className="mt-2 text-[1.05rem] font-medium text-white/80">
@@ -98,6 +103,9 @@ export function ReportView({
           </p>
         </div>
       </section>
+
+      {/* Lead capture: value has landed, now capture the visitor */}
+      <LeadCapture report={report} />
 
       {/* Risks */}
       <section className="mt-10">
@@ -175,6 +183,10 @@ export function ReportView({
             {s.report.trustLine}
           </p>
         </div>
+
+        {/* Easy entry: the friction-free first yes */}
+        <EasyEntry onStart={() => openBuy(supportPkg)} />
+
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           {report.packages.map((p) => (
             <PackageCard
@@ -306,6 +318,134 @@ function PackageCard({
         </Button>
       </div>
     </div>
+  );
+}
+
+/* Easy entry: pushes the friction-free first yes (Support, €240/mo). */
+function EasyEntry({ onStart }: { onStart: () => void }) {
+  const s = useStr();
+  return (
+    <div className="no-print mt-4 flex flex-col gap-4 rounded-xl2 border-2 border-accent/30 bg-accent-soft p-5 shadow-card sm:flex-row sm:items-center sm:justify-between md:p-6">
+      <div className="min-w-0">
+        <p className="font-display text-[0.8rem] font-bold uppercase tracking-wider text-accent">
+          {s.report.easyKicker}
+        </p>
+        <h3 className="mt-1 font-display text-[1.3rem] font-extrabold leading-tight tracking-tight text-ink sm:text-[1.55rem]">
+          {s.report.easyTitle}
+        </h3>
+        <p className="mt-1.5 max-w-xl text-[1.02rem] leading-relaxed text-ink">
+          {s.report.easyBody}
+        </p>
+      </div>
+      <Button onClick={onStart} className="w-full shrink-0 sm:w-auto">
+        {s.report.easyCta}
+        <ArrowIcon className="h-5 w-5" />
+      </Button>
+    </div>
+  );
+}
+
+/* Lead capture: one email field, shown after the value lands. Posts to
+   the owner via FormSubmit so cold ad traffic is captured even if they
+   don't buy on the first visit. Value first, never blocks the report. */
+function LeadCapture({ report }: { report: Report }) {
+  const s = useStr();
+  const r = s.report;
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
+
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email.trim() || status === "sending") return;
+    setStatus("sending");
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${OWNER_EMAIL}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: r.leadSubject,
+          Email: email,
+          Audit_score: `${report.score}/100 (${report.zoneLabel})`,
+          Recommended_path: report.recommendation.title,
+          Profile: report.profileLine,
+        }),
+      });
+      if (!res.ok) throw new Error("bad status");
+      track("lead_captured", { score: report.score, path: report.pathKind });
+      setStatus("done");
+    } catch {
+      setStatus("error");
+    }
+  }
+
+  const mailto =
+    `mailto:${OWNER_EMAIL}?subject=` +
+    encodeURIComponent(r.leadSubject) +
+    "&body=" +
+    encodeURIComponent(`${r.leadPlaceholder}: ${email}\n${report.profileLine}`);
+
+  return (
+    <section className="no-print mt-6">
+      <div className="overflow-hidden rounded-xl2 bg-ink p-6 shadow-lift md:p-8">
+        <p className="font-display text-[0.8rem] font-bold uppercase tracking-wider text-accent-soft">
+          {r.leadKicker}
+        </p>
+        <h2 className="mt-2 font-display text-[1.5rem] font-extrabold leading-tight tracking-tight text-white sm:text-[1.9rem]">
+          {r.leadTitle}
+        </h2>
+
+        {status === "done" ? (
+          <div className="mt-4 flex items-start gap-3 rounded-xl2 bg-white/10 p-5">
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-ok text-white">
+              <CheckIcon className="h-5 w-5" />
+            </span>
+            <div>
+              <p className="font-display text-[1.15rem] font-extrabold text-white">
+                {r.leadDoneTitle}
+              </p>
+              <p className="mt-1 text-[1.02rem] leading-relaxed text-white/85">
+                {r.leadDoneBody}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <>
+            <p className="mt-2 max-w-2xl text-[1.08rem] leading-relaxed text-white/85">
+              {r.leadBody}
+            </p>
+            <form onSubmit={submit} className="mt-5 flex flex-col gap-3 sm:flex-row">
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={r.leadPlaceholder}
+                autoComplete="email"
+                aria-label={r.leadPlaceholder}
+                className="w-full flex-1 rounded-xl border-2 border-white/20 bg-white px-4 py-3.5 text-[1.05rem] text-ink placeholder:text-ink-2/70 focus:border-accent focus:outline-none"
+              />
+              <Button
+                type="submit"
+                disabled={!email.trim() || status === "sending"}
+                className="w-full shrink-0 sm:w-auto"
+              >
+                {status === "sending" ? r.leadSending : r.leadButton}
+                <ArrowIcon className="h-5 w-5" />
+              </Button>
+            </form>
+            {status === "error" && (
+              <p className="mt-3 text-[0.98rem] font-semibold text-white">
+                {r.leadError}
+                <a className="font-bold underline" href={mailto}>
+                  {r.leadErrorLink}
+                </a>
+                .
+              </p>
+            )}
+          </>
+        )}
+      </div>
+    </section>
   );
 }
 

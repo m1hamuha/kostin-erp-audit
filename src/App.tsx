@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { emptyAnswers } from "./questions";
 import type { Answers, Lang } from "./types";
 import { generateReport } from "./generateReport";
+import { track } from "./analyticsConfig";
 import { LangCtx, STR } from "./i18n";
 import { Intro } from "./components/Intro";
 import { Questionnaire } from "./components/Questionnaire";
@@ -31,12 +32,14 @@ export function App() {
   function start() {
     setAnswers(emptyAnswers);
     setScreen("quiz");
+    track("audit_started");
     window.scrollTo({ top: 0 });
   }
 
   function finish(final: Answers) {
     setAnswers(final);
     setScreen("report");
+    track("audit_completed");
     window.scrollTo({ top: 0 });
   }
 

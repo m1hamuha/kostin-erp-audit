@@ -2,6 +2,10 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { App } from "./App";
+import { initAnalytics } from "./analyticsConfig";
+
+// Loads GA4 / Meta Pixel only if their IDs are set in analyticsConfig.ts.
+initAnalytics();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
