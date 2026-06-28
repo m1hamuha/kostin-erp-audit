@@ -215,6 +215,12 @@ const en = {
     startBtn: "Get started",
     startCtaNote: "Secure checkout. Bank transfer available.",
     modalKicker: "What happens next",
+    chooseKicker: "Choose your plan",
+    chooseTitle: "Start light, scale when ready",
+    chooseSub: "Three ways in. Switch or add anytime.",
+    startHere: "Start here",
+    chooseBtn: "Choose",
+    changePlan: "Change plan",
     perMonth: "/mo",
     steps: [
       {
@@ -775,6 +781,12 @@ const uk: typeof en = {
     startBtn: "Почати",
     startCtaNote: "Безпечна оплата. Доступний банківський переказ.",
     modalKicker: "Що буде далі",
+    chooseKicker: "Оберіть свій план",
+    chooseTitle: "Почніть легко, зростайте згодом",
+    chooseSub: "Три способи почати. Змінюйте чи додавайте будь-коли.",
+    startHere: "Почніть звідси",
+    chooseBtn: "Обрати",
+    changePlan: "Змінити план",
     perMonth: "/міс",
     steps: [
       {

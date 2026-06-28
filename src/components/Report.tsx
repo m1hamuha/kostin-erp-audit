@@ -20,10 +20,12 @@ export function ReportView({
 }) {
   const { lang } = useLang();
   const s = useStr();
-  const [buyPkg, setBuyPkg] = useState<Pkg | null>(null);
-  const recommended =
-    report.packages.find((p) => p.id === report.recommendedPackage) ??
-    report.packages[0];
+  const [buyOpen, setBuyOpen] = useState(false);
+  const [buyInitial, setBuyInitial] = useState<Pkg | null>(null);
+  const openBuy = (p: Pkg | null) => {
+    setBuyInitial(p);
+    setBuyOpen(true);
+  };
   const today = new Date().toLocaleDateString(lang === "uk" ? "uk-UA" : "en-US", {
     day: "numeric",
     month: "long",
@@ -179,7 +181,7 @@ export function ReportView({
               key={p.id}
               pkg={p}
               recommended={p.id === report.recommendedPackage}
-              onGetStarted={() => setBuyPkg(p)}
+              onGetStarted={() => openBuy(p)}
             />
           ))}
         </div>
@@ -200,7 +202,7 @@ export function ReportView({
             </p>
           </div>
           <div className="no-print mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button onClick={() => setBuyPkg(recommended)} className="w-full sm:w-auto">
+            <Button onClick={() => openBuy(null)} className="w-full sm:w-auto">
               {s.buy.startBtn}
               <ArrowIcon className="h-5 w-5" />
             </Button>
@@ -221,8 +223,8 @@ export function ReportView({
         </Button>
       </div>
 
-      {buyPkg && (
-        <BuyFlow pkg={buyPkg} report={report} onClose={() => setBuyPkg(null)} />
+      {buyOpen && (
+        <BuyFlow initial={buyInitial} report={report} onClose={() => setBuyOpen(false)} />
       )}
     </div>
   );
