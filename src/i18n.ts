@@ -10,7 +10,7 @@ import type { Lang } from "./types";
 const en = {
   ui: {
     brand: "ERP Health Audit",
-    headerCta: "Free consultation",
+    headerCta: "Get started",
     footerTagline:
       "Odoo ERP: setup, custom work, and ongoing support.",
     contactPrefix: "Contact: ",
@@ -68,8 +68,8 @@ const en = {
         d: "Health score, ranked risks, a plan, and what manual work is costing you.",
       },
       {
-        t: "3. Book a free call",
-        d: "We go through the report together and agree on next steps. No obligation.",
+        t: "3. Choose a package and start",
+        d: "Pick the package that fits, pay securely, and tell us about your setup. We start within a few business days.",
       },
     ],
 
@@ -84,8 +84,8 @@ const en = {
         d: "A tight process with no agency layers. Projects move quicker and cost less.",
       },
       {
-        t: "Honest and specific",
-        d: "No fake logos or borrowed client lists. Clear scope, a fixed quote, numbers you can check.",
+        t: "Fixed price, no surprises",
+        d: "You get a clear scope and a fixed quote before we start. The number you agree is the number you pay.",
       },
       {
         t: "Built on open-source Odoo",
@@ -156,7 +156,7 @@ const en = {
     issueOne: "issue",
     issueMany: "issues",
     noRisks:
-      "No clear problems showed up in the questionnaire, which is a good sign. A short live check will confirm the full picture.",
+      "No clear problems showed up in the questionnaire, which is a good sign. A short check once we begin will confirm the full picture.",
     planTitle: "Recommended plan",
     packagesTitle: "What you get",
     packagesIntro: "Three ways to work together. Pick one or combine them.",
@@ -166,7 +166,7 @@ const en = {
     fromWord: "from",
     perMonthWord: "/mo",
     estimateNote:
-      "These figures are estimates. We confirm scope and a fixed quote after a short, free call.",
+      "These figures are estimates. We confirm scope and a fixed quote with you in writing before any work starts.",
     trustLine:
       "A lean, direct studio. No agency overhead, no middlemen. Senior-level work, so you pay less.",
     // Area sub-scores
@@ -189,7 +189,7 @@ const en = {
     impactSaveUnit: "/ year",
     impactSaveSub: "About {hours} hours and {cost} back every month",
     impactAssumption:
-      "Estimate only. It assumes about {rate}/hour fully loaded labour and Odoo automation removing about {pct}% of this manual work. We confirm your real numbers on the free call.",
+      "Estimate only. It assumes about {rate}/hour fully loaded labour and Odoo automation removing about {pct}% of this manual work. We confirm your real numbers once we scope the work.",
     benchmarkKicker: "Benchmark",
     benchmarkBase:
       "Businesses your size that move to Odoo typically cut manual data entry by 40 to 60% and bring bank, sales, inventory, and invoicing into one connected system.",
@@ -203,35 +203,79 @@ const en = {
         "It works, but problems have built up that slow you down and add risk.",
       red: "There are serious risks here. Worth acting on soon.",
     },
-    ctaTitle: "Book a free consultation",
+    ctaTitle: "Ready to get started?",
     ctaBody:
-      "We'll go through your report together, answer your questions, and map out the first steps. No obligation. Leave a contact and we'll reach out.",
+      "Pick the package that fits, pay securely, and tell us about your setup. You get a clear status at every step, from kickoff to delivery.",
     print: "Print / save as PDF",
     restart: "Retake the audit",
-    form: {
-      nameLabel: "Your name",
-      namePlaceholder: "Name",
-      contactLabel: "Email or phone",
-      contactPlaceholder: "you@company.com",
-      commentLabel: "Comment",
-      commentOptional: "(optional)",
-      commentPlaceholder: "Best time to reach you, or any extra details.",
-      submit: "Book consultation",
-      submitting: "Sending",
-      okTitle: "Request sent",
-      okBody:
-        "We'll be in touch shortly to set up your free consultation. Thank you.",
-      errorPrefix: "Couldn't send. Email us directly: ",
-      errorLink: "send email",
-      consent:
-        "By submitting, you agree we can use your contact details to get back to you.",
-      emailSubject: "ERP audit: consultation request",
-      fScore: "Health score",
-      fProfile: "Profile",
-      fRisks: "Identified risks",
-      fPath: "Recommended path",
-      fPackage: "Recommended package",
-    },
+  },
+
+  buy: {
+    getStarted: "Get started",
+    startBtn: "Get started",
+    startCtaNote: "Secure checkout. Bank transfer available.",
+    modalKicker: "What happens next",
+    perMonth: "/mo",
+    steps: [
+      {
+        t: "Choose your plan and pay",
+        d: "Pay securely with PayPal, or request a bank transfer.",
+      },
+      {
+        t: "Tell us about your setup",
+        d: "A short form so we can start fast.",
+      },
+      {
+        t: "We start within a few business days",
+        d: "Your project gets scheduled and underway.",
+      },
+      {
+        t: "You get your deliverables",
+        d: "With a clear status the whole way through.",
+      },
+    ],
+    payTitle: "Choose your plan and pay",
+    oneTimeNote: "One-time payment to begin.",
+    subNote: "Monthly plan. Cancel anytime.",
+    payLoading: "Loading secure checkout...",
+    paypalUnconfigured:
+      "Card and PayPal checkout is being finalized. Use bank transfer below to start now.",
+    payWithLink: "Pay with PayPal",
+    paidTitle: "Payment received",
+    paidBody: "Thank you. Now tell us about your setup below so we can start.",
+    paidSubject: "Payment received",
+    bankToggle: "Pay by bank transfer instead",
+    bankIntro:
+      "Prefer a bank transfer? Request the details and we email them straight to you.",
+    bankHow:
+      "You request, we email you the bank details, you transfer, we confirm and start.",
+    bankName: "Your name",
+    bankEmail: "Email",
+    bankCompany: "Company",
+    bankSubmit: "Request bank details",
+    bankSubmitting: "Sending",
+    bankSubject: "Bank transfer request",
+    intakeTitle: "Tell us about your setup",
+    intakeSubtitle: "A few details so we can start fast. Takes a minute.",
+    fCompany: "Company",
+    fCompanyPh: "Company name",
+    fSystem: "Current system",
+    fSystemPh: "e.g. spreadsheets, 1C, QuickBooks, SAP",
+    fGoal: "Main goal or what hurts most",
+    fGoalPh: "What you most want to fix or achieve",
+    fName: "Your name",
+    fNamePh: "Name",
+    fEmail: "Email",
+    fEmailPh: "you@company.com",
+    intakeSubmit: "Send my details",
+    intakeSubmitting: "Sending",
+    intakeSubject: "New onboarding intake",
+    errorPrefix: "Couldn't send. Email us directly: ",
+    errorLink: "send email",
+    doneTitle: "You're all set",
+    doneBody:
+      "Thank you. We have your details and will be in touch shortly with your next step. You will have a clear status the whole way.",
+    close: "Close",
   },
 
   labels: {
@@ -523,7 +567,7 @@ const en = {
 const uk: typeof en = {
   ui: {
     brand: "ERP-аудит",
-    headerCta: "Безкоштовна консультація",
+    headerCta: "Почати",
     footerTagline:
       "Odoo ERP: впровадження, доробка та супровід.",
     contactPrefix: "Звʼязок: ",
@@ -581,8 +625,8 @@ const uk: typeof en = {
         d: "Оцінка стану, ризики за пріоритетом, план і вартість ручної роботи.",
       },
       {
-        t: "3. Безкоштовний дзвінок",
-        d: "Разом проходимо звіт і домовляємось про наступні кроки. Без зобовʼязань.",
+        t: "3. Оберіть пакет і почніть",
+        d: "Виберіть відповідний пакет, оплатіть безпечно і розкажіть про своє налаштування. Стартуємо за кілька робочих днів.",
       },
     ],
 
@@ -597,8 +641,8 @@ const uk: typeof en = {
         d: "Чіткий процес без зайвих ланок агенції. Проєкти йдуть швидше і коштують менше.",
       },
       {
-        t: "Чесно і конкретно",
-        d: "Без фейкових лого і чужих клієнтів. Зрозумілий обсяг, фіксована ціна, цифри, які можна перевірити.",
+        t: "Фіксована ціна, без сюрпризів",
+        d: "Чіткий обсяг і фіксована вартість ще до старту. Сума, яку ви погодили, і є сумою до сплати.",
       },
       {
         t: "На відкритому Odoo",
@@ -669,7 +713,7 @@ const uk: typeof en = {
     issueOne: "питання",
     issueMany: "питань",
     noRisks:
-      "За анкетою явних проблем не видно, і це добрий знак. Точну картину покаже коротка діагностика вживу.",
+      "За анкетою явних проблем не видно, і це добрий знак. Точну картину покаже коротка перевірка після старту.",
     planTitle: "Рекомендований план",
     packagesTitle: "Що ви отримаєте",
     packagesIntro:
@@ -680,7 +724,7 @@ const uk: typeof en = {
     fromWord: "від",
     perMonthWord: "/міс",
     estimateNote:
-      "Цифри орієнтовні. Точний обсяг і фіксовану вартість узгодимо після короткого безкоштовного дзвінка.",
+      "Цифри орієнтовні. Точний обсяг і фіксовану вартість узгодимо з вами письмово ще до початку робіт.",
     trustLine:
       "Ощадлива, пряма студія. Без націнок агенцій і посередників. Робота senior-рівня, тож ви платите менше.",
     subScoresTitle: "Де ви зараз, за напрямами",
@@ -701,7 +745,7 @@ const uk: typeof en = {
     impactSaveUnit: "/ рік",
     impactSaveSub: "Близько {hours} годин і {cost} назад щомісяця",
     impactAssumption:
-      "Лише орієнтовно. З розрахунку близько {rate}/год повної вартості праці та автоматизації Odoo, що прибирає близько {pct}% цієї ручної роботи. Ваші реальні цифри уточнимо на безкоштовному дзвінку.",
+      "Лише орієнтовно. З розрахунку близько {rate}/год повної вартості праці та автоматизації Odoo, що прибирає близько {pct}% цієї ручної роботи. Ваші реальні цифри уточнимо, коли визначимо обсяг робіт.",
     benchmarkKicker: "Орієнтир",
     benchmarkBase:
       "Бізнеси вашого розміру, що переходять на Odoo, зазвичай скорочують ручне введення даних на 40-60% і зводять банк, продажі, склад і рахунки в одну зв'язану систему.",
@@ -719,35 +763,80 @@ const uk: typeof en = {
         "Працює, але накопичились проблеми, які гальмують і створюють ризики.",
       red: "Тут є серйозні ризики. Варто зайнятися ними найближчим часом.",
     },
-    ctaTitle: "Безкоштовна консультація",
+    ctaTitle: "Готові почати?",
     ctaBody:
-      "Розберемо ваш звіт наживо, відповімо на питання і намітимо перші кроки. Без зобовʼязань. Залиште контакт, і ми звʼяжемося з вами.",
+      "Виберіть відповідний пакет, оплатіть безпечно і розкажіть про своє налаштування. Ви бачите чіткий статус на кожному кроці, від старту до результату.",
     print: "Друк / зберегти PDF",
     restart: "Пройти аудит знову",
-    form: {
-      nameLabel: "Як до вас звертатися",
-      namePlaceholder: "Імʼя",
-      contactLabel: "E-mail або телефон",
-      contactPlaceholder: "you@company.com",
-      commentLabel: "Коментар",
-      commentOptional: "(необовʼязково)",
-      commentPlaceholder: "Зручний час або додаткові деталі.",
-      submit: "Записатися на консультацію",
-      submitting: "Надсилаємо",
-      okTitle: "Заявку надіслано",
-      okBody:
-        "Звʼяжемося найближчим часом, щоб призначити безкоштовну консультацію. Дякуємо.",
-      errorPrefix: "Не вдалося надіслати. Напишіть напряму: ",
-      errorLink: "надіслати лист",
-      consent:
-        "Натискаючи кнопку, ви погоджуєтесь на використання контактів для звʼязку.",
-      emailSubject: "ERP-аудит: заявка на консультацію",
-      fScore: "Оцінка стану",
-      fProfile: "Профіль",
-      fRisks: "Виявлені ризики",
-      fPath: "Рекомендований шлях",
-      fPackage: "Рекомендований пакет",
-    },
+  },
+
+  buy: {
+    getStarted: "Почати",
+    startBtn: "Почати",
+    startCtaNote: "Безпечна оплата. Доступний банківський переказ.",
+    modalKicker: "Що буде далі",
+    perMonth: "/міс",
+    steps: [
+      {
+        t: "Оберіть пакет і оплатіть",
+        d: "Оплатіть безпечно через PayPal або запросіть банківський переказ.",
+      },
+      {
+        t: "Розкажіть про своє налаштування",
+        d: "Коротка форма, щоб ми швидко стартували.",
+      },
+      {
+        t: "Починаємо за кілька робочих днів",
+        d: "Ваш проєкт ставимо в роботу й розпочинаємо.",
+      },
+      {
+        t: "Ви отримуєте результат",
+        d: "З чітким статусом протягом усього шляху.",
+      },
+    ],
+    payTitle: "Оберіть пакет і оплатіть",
+    oneTimeNote: "Разова оплата для старту.",
+    subNote: "Щомісячний план. Скасувати можна будь-коли.",
+    payLoading: "Завантажуємо безпечну оплату...",
+    paypalUnconfigured:
+      "Оплата карткою та через PayPal завершує налаштування. Скористайтесь банківським переказом нижче, щоб почати вже зараз.",
+    payWithLink: "Сплатити через PayPal",
+    paidTitle: "Оплату отримано",
+    paidBody:
+      "Дякуємо. Тепер розкажіть про своє налаштування нижче, щоб ми почали.",
+    paidSubject: "Оплату отримано",
+    bankToggle: "Сплатити банківським переказом",
+    bankIntro:
+      "Зручніше банківським переказом? Запросіть реквізити, і ми надішлемо їх вам на пошту.",
+    bankHow:
+      "Ви залишаєте запит, ми надсилаємо реквізити, ви робите переказ, ми підтверджуємо і починаємо.",
+    bankName: "Як до вас звертатися",
+    bankEmail: "E-mail",
+    bankCompany: "Компанія",
+    bankSubmit: "Запросити реквізити",
+    bankSubmitting: "Надсилаємо",
+    bankSubject: "Запит на банківський переказ",
+    intakeTitle: "Розкажіть про своє налаштування",
+    intakeSubtitle: "Кілька деталей, щоб ми швидко стартували. Займе хвилину.",
+    fCompany: "Компанія",
+    fCompanyPh: "Назва компанії",
+    fSystem: "Поточна система",
+    fSystemPh: "напр. таблиці, 1С, QuickBooks, SAP",
+    fGoal: "Головна мета або що болить найбільше",
+    fGoalPh: "Що найбільше хочете виправити чи досягти",
+    fName: "Як до вас звертатися",
+    fNamePh: "Імʼя",
+    fEmail: "E-mail",
+    fEmailPh: "you@company.com",
+    intakeSubmit: "Надіслати дані",
+    intakeSubmitting: "Надсилаємо",
+    intakeSubject: "Нова заявка на старт",
+    errorPrefix: "Не вдалося надіслати. Напишіть напряму: ",
+    errorLink: "надіслати лист",
+    doneTitle: "Усе готово",
+    doneBody:
+      "Дякуємо. Ми отримали ваші дані і незабаром звʼяжемося з наступним кроком. Ви матимете чіткий статус протягом усього шляху.",
+    close: "Закрити",
   },
 
   labels: {

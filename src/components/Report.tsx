@@ -1,7 +1,8 @@
+import { useState } from "react";
 import type { Report, Risk, Pkg, SubScore, Impact } from "../types";
 import { useLang, useStr, formatEur } from "../i18n";
 import { HealthScore } from "./HealthScore";
-import { ContactForm } from "./ContactForm";
+import { BuyFlow } from "./BuyFlow";
 import { Button, cx, CheckIcon, ArrowIcon } from "./ui";
 
 const SEV_STYLE: Record<Risk["severity"], { dot: string; chip: string }> = {
@@ -19,6 +20,10 @@ export function ReportView({
 }) {
   const { lang } = useLang();
   const s = useStr();
+  const [buyPkg, setBuyPkg] = useState<Pkg | null>(null);
+  const recommended =
+    report.packages.find((p) => p.id === report.recommendedPackage) ??
+    report.packages[0];
   const today = new Date().toLocaleDateString(lang === "uk" ? "uk-UA" : "en-US", {
     day: "numeric",
     month: "long",
@@ -174,6 +179,7 @@ export function ReportView({
               key={p.id}
               pkg={p}
               recommended={p.id === report.recommendedPackage}
+              onGetStarted={() => setBuyPkg(p)}
             />
           ))}
         </div>
@@ -193,8 +199,14 @@ export function ReportView({
               {s.report.ctaBody}
             </p>
           </div>
-          <div className="mt-6 rounded-xl2 border border-line bg-surface p-5 md:p-7">
-            <ContactForm report={report} />
+          <div className="no-print mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <Button onClick={() => setBuyPkg(recommended)} className="w-full sm:w-auto">
+              {s.buy.startBtn}
+              <ArrowIcon className="h-5 w-5" />
+            </Button>
+            <span className="text-[1rem] font-semibold text-ink-2">
+              {s.buy.startCtaNote}
+            </span>
           </div>
         </div>
       </section>
@@ -208,11 +220,23 @@ export function ReportView({
           {s.report.restart}
         </Button>
       </div>
+
+      {buyPkg && (
+        <BuyFlow pkg={buyPkg} report={report} onClose={() => setBuyPkg(null)} />
+      )}
     </div>
   );
 }
 
-function PackageCard({ pkg, recommended }: { pkg: Pkg; recommended: boolean }) {
+function PackageCard({
+  pkg,
+  recommended,
+  onGetStarted,
+}: {
+  pkg: Pkg;
+  recommended: boolean;
+  onGetStarted: () => void;
+}) {
   const s = useStr();
   return (
     <div
@@ -267,6 +291,18 @@ function PackageCard({ pkg, recommended }: { pkg: Pkg; recommended: boolean }) {
           </li>
         ))}
       </ul>
+
+      <div className="no-print mt-auto pt-6">
+        <Button
+          onClick={onGetStarted}
+          variant={recommended ? "primary" : "subtle"}
+          size="md"
+          className="w-full"
+        >
+          {s.buy.getStarted}
+          <ArrowIcon className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 }
